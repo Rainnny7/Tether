@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM 3.9.9-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS builder
 
 # Set the working directory
 WORKDIR /home/container
