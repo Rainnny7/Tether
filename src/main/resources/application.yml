@@ -1,0 +1,19 @@
+# Server Configuration
+server:
+  address: 0.0.0.0
+  port: 7500
+
+# Log Configuration
+logging:
+  file:
+    path: "./logs"
+
+# Discord Configuration
+discord:
+  bot-token: "CHANGE_ME"
+
+# Spring Configuration
+spring:
+  # Ignore
+  banner:
+    location: "classpath:banner.txt"
