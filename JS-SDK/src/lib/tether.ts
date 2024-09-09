@@ -12,6 +12,7 @@ export const useTetherWS = (
 ): DiscordUser | undefined => {
     const [user] = useState<DiscordUser | undefined>();
 
+    const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     useEffect(() => {
         let socket: WebSocket; // The current WebSocket connection
 
@@ -19,7 +20,7 @@ export const useTetherWS = (
          * Establish a connection with the API.
          */
         function connect() {
-            socket = new WebSocket(`ws${secure && "s"}://${endpoint}/gateway`); // Connect to the gateway
+            socket = new WebSocket(url); // Connect to the gateway
             socket.addEventListener("open", () =>
                 console.log("[Tether] WebSocket connection established!")
             );
@@ -36,7 +37,7 @@ export const useTetherWS = (
             socket.removeEventListener("close", connect);
             socket.close();
         };
-    }, [endpoint, secure]);
+    }, [url]);
 
     return user;
 };
