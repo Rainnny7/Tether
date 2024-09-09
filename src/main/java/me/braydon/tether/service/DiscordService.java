@@ -72,20 +72,9 @@ public final class DiscordService {
             throw new BadRequestException("Not a valid snowflake");
         }
         try {
-            // First try to locate the user in a guild
-            Member member = null;
-            try {
-                for (Guild guild : jda.getGuilds()) {
-                    if ((member = guild.retrieveMemberById(snowflake).complete()) != null) {
-                        break;
-                    }
-                }
-            } catch (ErrorResponseException ex) {
-                if (ex.getErrorCode() != 10007) {
-                    throw ex;
-                }
-            }
-            // Then retrieve the user
+            Member member = getMember(snowflake); // First try to locate the member in a guild
+
+            // Then retrieve the user (first try the cache)
             CachedDiscordUser cachedUser = cachedUsers.getIfPresent(snowflake);
             boolean fromCache = cachedUser != null;
             if (cachedUser == null) { // No cache, retrieve fresh data
@@ -129,5 +118,27 @@ public final class DiscordService {
         log.info("Bot connected! Logged in as {}, invite me using {}",
                 self.getAsTag(), inviteUrl
         );
+    }
+
+    /**
+     * Get a member from a guild by their snowflake.
+     *
+     * @param snowflake the user's snowflake
+     * @return the member, null if none
+     */
+    private Member getMember(long snowflake) {
+        Member member = null;
+        try {
+            for (Guild guild : jda.getGuilds()) {
+                if ((member = guild.retrieveMemberById(snowflake).complete()) != null) {
+                    break;
+                }
+            }
+        } catch (ErrorResponseException ex) {
+            if (ex.getErrorCode() != 10007) {
+                throw ex;
+            }
+        }
+        return member;
     }
 }

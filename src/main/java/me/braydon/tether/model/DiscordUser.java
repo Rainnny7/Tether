@@ -121,7 +121,14 @@ public final class DiscordUser {
      */
     @AllArgsConstructor @Getter
     public static class UserFlags {
-        private final EnumSet<User.UserFlag> list;
+        /**
+         * The list of flags the user has.
+         */
+        @NonNull private final EnumSet<User.UserFlag> list;
+
+        /**
+         * The raw flags the user has.
+         */
         private final int raw;
     }
 
@@ -130,7 +137,14 @@ public final class DiscordUser {
      */
     @AllArgsConstructor @Getter
     public static class Avatar {
+        /**
+         * The id of the user's avatar.
+         */
         @NonNull private final String id;
+
+        /**
+         * The URL of the user's avatar.
+         */
         @NonNull private final String url;
     }
 
@@ -139,7 +153,14 @@ public final class DiscordUser {
      */
     @AllArgsConstructor @Getter
     public static class Banner {
+        /**
+         * The id of the user's avatar.
+         */
         @NonNull private final String id;
+
+        /**
+         * The URL of the user's avatar.
+         */
         @NonNull private final String url;
     }
 
@@ -148,11 +169,39 @@ public final class DiscordUser {
      */
     @AllArgsConstructor @Getter
     public static class SpotifyActivity {
+        /**
+         * The currently playing song.
+         */
         @NonNull private final String song;
+
+        /**
+         * The currently playing artist.
+         */
         @NonNull private final String artist;
+
+        /**
+         * The album the song is from.
+         */
+        @NonNull private final String album;
+
+        /**
+         * The current progress of the track.
+         */
         @NonNull private final String trackProgress;
+
+        /**
+         * The total length of the track.
+         */
         @NonNull private final String trackLength;
+
+        /**
+         * The unix time of when this track started playing.
+         */
         private final long started;
+
+        /**
+         * The unix time of when this track stops playing.
+         */
         private final long ends;
 
         /**
@@ -161,7 +210,7 @@ public final class DiscordUser {
          * @param richPresence the raw Discord data
          * @return the built Spotify activity
          */
-        @NonNull
+        @NonNull @SuppressWarnings("DataFlowIssue")
         public static SpotifyActivity fromActivity(@NonNull RichPresence richPresence) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("m:ss");
             long started = Objects.requireNonNull(richPresence.getTimestamps()).getStart();
@@ -171,9 +220,9 @@ public final class DiscordUser {
             long trackProgress = Math.min(System.currentTimeMillis() - started, trackLength);
 
             return new SpotifyActivity(
-                    Objects.requireNonNull(richPresence.getDetails()), Objects.requireNonNull(richPresence.getState()).replace(";", ","),
+                    richPresence.getDetails(), richPresence.getState().replace(";", ","),
                     dateFormat.format(trackProgress), dateFormat.format(trackLength),
-                    started, ends
+                    richPresence.getLargeImage().getText(), started, ends
             );
         }
     }
