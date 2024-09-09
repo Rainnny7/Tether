@@ -11,10 +11,7 @@ import me.braydon.tether.model.DiscordUser;
 import me.braydon.tether.model.response.DiscordUserResponse;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -66,7 +63,7 @@ public final class DiscordService {
             // First try to locate the user in a guild
             Member member = null;
             for (Guild guild : jda.getGuilds()) {
-                if ((member = guild.getMemberById(snowflake)) != null) {
+                if ((member = guild.retrieveMemberById(snowflake).complete()) != null) {
                     break;
                 }
             }
@@ -96,9 +93,11 @@ public final class DiscordService {
             log.info("The latency to Discord is {}ms", ping);
         });
         jda.awaitReady();
+
+        SelfUser self = jda.getSelfUser();
+        String inviteUrl = "https://discord.com/oauth2/authorize?client_id=" + self.getId() + "&permissions=8&integration_type=0&scope=bot+applications.commands";
         log.info("Bot connected! Logged in as {}, invite me using {}",
-                jda.getSelfUser().getAsTag(),
-                "https://discord.com/oauth2/authorize?client_id=" + jda.getSelfUser().getId()
+                self.getAsTag(), inviteUrl
         );
     }
 }
