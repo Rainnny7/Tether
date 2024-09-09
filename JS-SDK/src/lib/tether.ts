@@ -3,7 +3,7 @@ import DiscordUser from "@/types/user";
 import {useEffect, useState} from "react";
 
 export const useTether = (
-    snowflake: number,
+    snowflake: bigint | string,
     {endpoint, secure, realtime}: TetherConfig = {
         endpoint: "usetether.rest",
         secure: true,
