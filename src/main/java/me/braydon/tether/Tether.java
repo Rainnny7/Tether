@@ -29,8 +29,6 @@ public class Tether {
             return;
         }
         log.info("Found configuration at '{}'", config.getAbsolutePath());
-
-        // Start the app
-        SpringApplication.run(Tether.class, args);
+        SpringApplication.run(Tether.class, args); // Start the app
     }
 }
