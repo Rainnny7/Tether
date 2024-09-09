@@ -8,7 +8,7 @@ WORKDIR /home/container
 COPY . .
 
 # Build the jar
-RUN mvn package -T2C -q -Dmaven.test.skip -DskipTests
+RUN mvn package -T2C -Dmaven.test.skip -DskipTests
 
 # Stage 2: Create the final lightweight image
 FROM eclipse-temurin:17.0.11_9-jre-focal
