@@ -2,16 +2,11 @@ type TetherConfig = {
     /**
      * The API endpoint to connect to.
      */
-    endpoint?: string,
+    endpoint?: string;
 
     /**
      * Whether the connection should be secure.
      */
-    secure?: boolean,
-
-    /**
-     * Whether the data should be fetched in real-time.
-     */
-    realtime?: boolean,
+    secure?: boolean;
 };
 export default TetherConfig;
