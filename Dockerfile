@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM maven:3.9.9-eclipse-temurin-21-alpine AS builder
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS builder
 
 # Set the working directory
 WORKDIR /home/container
@@ -11,7 +11,7 @@ COPY . .
 RUN mvn package -T2C -Dmaven.test.skip -DskipTests
 
 # Stage 2: Create the final lightweight image
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:17.0.11_9-jre-focal
 
 # Install Git
 RUN apt-get update && apt-get install git -y
