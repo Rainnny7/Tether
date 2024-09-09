@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
 
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +14,7 @@ import java.util.Objects;
  *
  * @author Braydon
  */
-@AllArgsConstructor @Getter @EqualsAndHashCode(onlyExplicitlyIncluded = true) @ToString
+@AllArgsConstructor @Getter @EqualsAndHashCode @ToString
 public final class DiscordUser {
     /**
      * The unique snowflake of this user.
@@ -70,7 +69,7 @@ public final class DiscordUser {
     /**
      * The Spotify activity of this user, if known.
      */
-    private final SpotifyActivity spotify;
+    @EqualsAndHashCode.Exclude private final SpotifyActivity spotify;
 
     /**
      * Is this user a bot?
@@ -78,9 +77,9 @@ public final class DiscordUser {
     private final boolean bot;
 
     /**
-     * The user creation date.
+     * The unix time of when this user joined Discord.
      */
-    @NonNull private final OffsetDateTime createdAt;
+    private final long createdAt;
 
     /**
      * Builds a Discord user from the
@@ -112,14 +111,14 @@ public final class DiscordUser {
         }
         return new DiscordUser(
                 user.getIdLong(), user.getName(), user.getGlobalName(), new UserFlags(user.getFlags(), user.getFlagsRaw()),
-                avatar, banner, accentColor, onlineStatus, activeClients, activities, spotify, user.isBot(), user.getTimeCreated()
+                avatar, banner, accentColor, onlineStatus, activeClients, activities, spotify, user.isBot(), user.getTimeCreated().toInstant().toEpochMilli()
         );
     }
 
     /**
      * A user's flags.
      */
-    @AllArgsConstructor @Getter
+    @AllArgsConstructor @Getter @EqualsAndHashCode
     public static class UserFlags {
         /**
          * The list of flags the user has.
@@ -135,7 +134,7 @@ public final class DiscordUser {
     /**
      * A user's avatar.
      */
-    @AllArgsConstructor @Getter
+    @AllArgsConstructor @Getter @EqualsAndHashCode
     public static class Avatar {
         /**
          * The id of the user's avatar.
@@ -151,7 +150,7 @@ public final class DiscordUser {
     /**
      * A user's banner.
      */
-    @AllArgsConstructor @Getter
+    @AllArgsConstructor @Getter @EqualsAndHashCode
     public static class Banner {
         /**
          * The id of the user's avatar.
@@ -221,8 +220,8 @@ public final class DiscordUser {
 
             return new SpotifyActivity(
                     richPresence.getDetails(), richPresence.getState().replace(";", ","),
-                    dateFormat.format(trackProgress), dateFormat.format(trackLength),
-                    richPresence.getLargeImage().getText(), started, ends
+                    richPresence.getLargeImage().getText(), dateFormat.format(trackProgress),
+                    dateFormat.format(trackLength), started, ends
             );
         }
     }

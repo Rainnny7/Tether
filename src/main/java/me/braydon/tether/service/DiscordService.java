@@ -62,14 +62,27 @@ public final class DiscordService {
      */
     @NonNull
     public DiscordUserResponse getUserBySnowflake(@NonNull String rawSnowflake) throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
-        if (jda == null || (jda.getStatus() != JDA.Status.CONNECTED)) { // Ensure bot is connected
-            throw new ServiceUnavailableException("Not connected to Discord.");
-        }
         long snowflake;
         try {
             snowflake = Long.parseLong(rawSnowflake);
         } catch (NumberFormatException ex) {
             throw new BadRequestException("Not a valid snowflake");
+        }
+        return getUserBySnowflake(snowflake);
+    }
+
+    /**
+     * Get a Discord user by their snowflake.
+     *
+     * @param snowflake the user snowflake
+     * @return the user response
+     * @throws ServiceUnavailableException if the bot is not connected
+     * @throws ResourceNotFoundException if the user is not found
+     */
+    @NonNull
+    public DiscordUserResponse getUserBySnowflake(long snowflake) throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
+        if (jda == null || (jda.getStatus() != JDA.Status.CONNECTED)) { // Ensure bot is connected
+            throw new ServiceUnavailableException("Not connected to Discord.");
         }
         try {
             Member member = getMember(snowflake); // First try to locate the member in a guild
