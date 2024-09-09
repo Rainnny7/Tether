@@ -74,9 +74,15 @@ public final class DiscordService {
         try {
             // First try to locate the user in a guild
             Member member = null;
-            for (Guild guild : jda.getGuilds()) {
-                if ((member = guild.retrieveMemberById(snowflake).complete()) != null) {
-                    break;
+            try {
+                for (Guild guild : jda.getGuilds()) {
+                    if ((member = guild.retrieveMemberById(snowflake).complete()) != null) {
+                        break;
+                    }
+                }
+            } catch (ErrorResponseException ex) {
+                if (ex.getErrorCode() != 10007) {
+                    throw ex;
                 }
             }
             // Then retrieve the user
