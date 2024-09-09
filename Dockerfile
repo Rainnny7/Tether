@@ -8,10 +8,13 @@ WORKDIR /home/container
 COPY . .
 
 # Build the jar
-RUN mvn package -q -Dmaven.test.skip -DskipTests -T2C
+RUN mvn package -T2C -Dmaven.test.skip -DskipTests
 
 # Stage 2: Create the final lightweight image
 FROM eclipse-temurin:21-jre-alpine
+
+# Install Git
+RUN apt-get update && apt-get install git -y
 
 # Set the working directory
 WORKDIR /home/container
