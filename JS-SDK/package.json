@@ -1,6 +1,6 @@
 {
 	"name": "usetether",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Braydon (Rainnny) <braydonrainnny@gmail.com>",
 	"description": "An API designed to provide real-time access to a user's Discord data.",
 	"keywords": [
@@ -10,7 +10,7 @@
 		"restful",
 		"realtime"
 	],
-	"homepage": "https://github.com/Rainnny7/Tether",
+	"homepage": "https://usetether.rest",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Rainnny7/Tether.git"

@@ -2,7 +2,13 @@ import TetherConfig from "@/types/config";
 import DiscordUser from "@/types/user";
 import {useEffect, useState} from "react";
 
-export const useTether = (snowflake: number, {endpoint = "usetether.rest", secure = true, realtime = false}: TetherConfig): DiscordUser | undefined => {
+export const useTether = (
+    snowflake: number,
+    {endpoint, secure, realtime}: TetherConfig = {
+        endpoint: "usetether.rest",
+        secure: true,
+        realtime: false
+    }): DiscordUser | undefined => {
     const [user] = useState<DiscordUser | undefined>();
 
     useEffect(() => {
@@ -13,11 +19,7 @@ export const useTether = (snowflake: number, {endpoint = "usetether.rest", secur
          */
         const connect = () => {
             socket = new WebSocket(`ws${secure && "s"}://${endpoint}/gateway`); // Connect to the gateway
-
-            socket.addEventListener("open", () => {
-                console.log("[Tether] WebSocket connection established!");
-            });
-
+            socket.addEventListener("open", () => console.log("[Tether] WebSocket connection established!"));
             socket.addEventListener("close", connect);
 
             socket.addEventListener("message", event => {
