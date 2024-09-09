@@ -11,7 +11,7 @@ COPY . .
 RUN mvn package -T2C -q -Dmaven.test.skip -DskipTests
 
 # Stage 2: Create the final lightweight image
-FROM eclipse-temurin:17.0.11_9-jre-focal
+FROM eclipse-temurin:17.0.12_7-jre-focal
 
 # Install Git
 RUN apt-get update && apt-get install git -y
