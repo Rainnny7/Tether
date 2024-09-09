@@ -4,7 +4,6 @@ import lombok.*;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
 
-import java.text.SimpleDateFormat;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
@@ -153,12 +152,12 @@ public final class DiscordUser {
     @AllArgsConstructor @Getter @EqualsAndHashCode
     public static class Banner {
         /**
-         * The id of the user's avatar.
+         * The id of the user's banner.
          */
         @NonNull private final String id;
 
         /**
-         * The URL of the user's avatar.
+         * The URL of the user's banner.
          */
         @NonNull private final String url;
     }
@@ -184,14 +183,14 @@ public final class DiscordUser {
         @NonNull private final String album;
 
         /**
-         * The current progress of the track.
+         * The current progress of the track (in millis).
          */
-        @NonNull private final String trackProgress;
+        private final long trackProgress;
 
         /**
-         * The total length of the track.
+         * The total length of the track (in millis).
          */
-        @NonNull private final String trackLength;
+        private final long trackLength;
 
         /**
          * The unix time of when this track started playing.
@@ -211,7 +210,6 @@ public final class DiscordUser {
          */
         @NonNull @SuppressWarnings("DataFlowIssue")
         public static SpotifyActivity fromActivity(@NonNull RichPresence richPresence) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("m:ss");
             long started = Objects.requireNonNull(richPresence.getTimestamps()).getStart();
             long ends = richPresence.getTimestamps().getEnd();
 
@@ -220,8 +218,7 @@ public final class DiscordUser {
 
             return new SpotifyActivity(
                     richPresence.getDetails(), richPresence.getState().replace(";", ","),
-                    richPresence.getLargeImage().getText(), dateFormat.format(trackProgress),
-                    dateFormat.format(trackLength), started, ends
+                    richPresence.getLargeImage().getText(), trackProgress, trackLength, started, ends
             );
         }
     }
