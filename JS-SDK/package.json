@@ -1,6 +1,6 @@
 {
   "name": "usetether",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "author": "Braydon (Rainnny) <braydonrainnny@gmail.com>",
   "description": "An API designed to provide real-time access to a user's Discord data.",
   "keywords": [
@@ -29,13 +29,11 @@
     "@types/bun": "latest",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
-    "react": "^18.3.1",
-    "react-dom": "18.3.1"
+    "react": "^18.3.1"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0",
     "react": "*",
-    "react-dom": "*"
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "tsup": "^8.2.4"

@@ -10,9 +10,9 @@ export const useTetherWS = (
         secure: true,
     }
 ): DiscordUser | undefined => {
+    const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     const [user] = useState<DiscordUser | undefined>();
 
-    const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     useEffect(() => {
         // Prevent from running on the server
         if (typeof window === "undefined") {
@@ -27,12 +27,13 @@ export const useTetherWS = (
             console.log("[Tether] Connecting to the WebSocket server...");
             socket = new WebSocket(url); // Connect to the gateway
             socket.addEventListener("open", () => {
+                socket.send(JSON.stringify({ op: 0, snowflake: snowflake })); // Track the user
                 console.log(
                     "[Tether] WebSocket connection established!",
                     snowflake
                 );
             });
-            socket.addEventListener("close", connect);
+            socket.addEventListener("close", connect); // Reconnect on close
 
             socket.addEventListener("message", (event) => {
                 console.log("data:", event.data);
