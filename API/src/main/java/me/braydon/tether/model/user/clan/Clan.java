@@ -24,7 +24,7 @@ public class Clan {
     /**
      * The badge for this clan.
      */
-    @NonNull private final Badge badge;
+    @NonNull private final ClanBadge clanBadge;
 
     /**
      * Whether the identity is enabled for this clan.
@@ -41,8 +41,8 @@ public class Clan {
     public static Clan fromJson(@NonNull JSONObject clanJson) {
         long snowflake = Long.parseLong(clanJson.getString("identity_guild_id"));
         String tag = clanJson.getString("tag");
-        Badge badge = Badge.fromJson(snowflake, clanJson);
+        ClanBadge clanBadge = ClanBadge.fromJson(snowflake, clanJson);
         boolean identityEnabled = clanJson.getBoolean("identity_enabled");
-        return new Clan(snowflake, tag, badge, identityEnabled);
+        return new Clan(snowflake, tag, clanBadge, identityEnabled);
     }
 }

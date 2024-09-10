@@ -5,7 +5,7 @@ import lombok.*;
 import me.braydon.tether.model.user.DiscordUser;
 
 /**
- * A {@link DiscordUser}'s avatar.
+ * The decoration for a {@link DiscordUser}'s {@link Avatar}.
  *
  * @author Braydon
  */

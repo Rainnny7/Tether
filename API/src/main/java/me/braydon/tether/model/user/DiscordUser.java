@@ -6,6 +6,7 @@ import lombok.*;
 import me.braydon.tether.common.DiscordUtils;
 import me.braydon.tether.model.user.avatar.Avatar;
 import me.braydon.tether.model.user.avatar.AvatarDecoration;
+import me.braydon.tether.model.user.badge.UserBadge;
 import me.braydon.tether.model.user.clan.Clan;
 import me.braydon.tether.model.user.nitro.NitroSubscription;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -77,6 +78,11 @@ public final class DiscordUser {
     private final String bio;
 
     /**
+     * The user's pronouns, if any.
+     */
+    private final String pronouns;
+
+    /**
      * The accent color (hex) of this user.
      */
     @NonNull private final String accentColor;
@@ -100,6 +106,11 @@ public final class DiscordUser {
      * The Spotify activity of this user, if known.
      */
     @EqualsAndHashCode.Exclude private final SpotifyActivity spotify;
+
+    /**
+     * The badges this user has.
+     */
+    @NonNull private final Set<UserBadge> badges;
 
     /**
      * The connected accounts of this user.
@@ -168,6 +179,12 @@ public final class DiscordUser {
         NitroSubscription nitroSubscription = userJson.isNull("premium_type")
                 || userJson.isNull("premium_since") ? null : NitroSubscription.fromJson(userJson);
 
+        JSONObject profileJson = userJson.has("user_profile") ? userJson.getJSONObject("user_profile") : null;
+        String pronouns = null;
+        if (profileJson != null) {
+            pronouns = profileJson.optString("pronouns", null);
+        }
+
         boolean bot = detailsJson.optBoolean("bot", false);
         long created = DiscordUtils.getTimeCreated(snowflake);
 
@@ -191,20 +208,29 @@ public final class DiscordUser {
             }
         }
 
+        // Get the user's badges
+        Set<UserBadge> badges = new HashSet<>();
+        if (userJson.has("badges")) {
+            JSONArray badgesArray = userJson.getJSONArray("badges");
+            for (int i = 0; i < badgesArray.length(); i++) {
+                badges.add(UserBadge.fromJson(badgesArray.getJSONObject(i)));
+            }
+        }
+
         // Get the user's connected accounts
         Set<ConnectedAccount> connectedAccounts = new HashSet<>();
         if (userJson.has("connected_accounts")) {
-            JSONArray accounts = userJson.getJSONArray("connected_accounts");
-            for (int i = 0; i < accounts.length(); i++) {
-                connectedAccounts.add(ConnectedAccount.fromJson(accounts.getJSONObject(i)));
+            JSONArray accountsArray = userJson.getJSONArray("connected_accounts");
+            for (int i = 0; i < accountsArray.length(); i++) {
+                connectedAccounts.add(ConnectedAccount.fromJson(accountsArray.getJSONObject(i)));
             }
         }
 
         // Finally return the constructed user
         return new DiscordUser(
                 snowflake, username, displayName, discriminator, flags, avatar, avatarDecoration, banner, bannerColor, bio,
-                accentColor, onlineStatus, activeClients, activities, spotify, connectedAccounts, clan, nitroSubscription,
-                bot, isUserLegacy, created
+                pronouns, accentColor, onlineStatus, activeClients, activities, spotify, badges, connectedAccounts, clan,
+                nitroSubscription, bot, isUserLegacy, created
         );
     }
 }

@@ -3,15 +3,14 @@ package me.braydon.tether.model.user.clan;
 import kong.unirest.core.json.JSONObject;
 import lombok.*;
 import me.braydon.tether.common.DiscordUtils;
-import me.braydon.tether.model.user.DiscordUser;
 
 /**
- * A {@link DiscordUser}'s avatar.
+ * A {@link Clan}'s badge.
  *
  * @author Braydon
  */
 @AllArgsConstructor(access = AccessLevel.PRIVATE) @Getter @EqualsAndHashCode
-public class Badge {
+public class ClanBadge {
     private static final String CLAN_BADGE_URL = "https://cdn.discordapp.com/clan-badges/%s/%s.%s";
 
     /**
@@ -32,8 +31,8 @@ public class Badge {
      * @return the constructed clan badge
      */
     @NonNull
-    protected static Badge fromJson(long userSnowflake, @NonNull JSONObject clanJson) {
+    protected static ClanBadge fromJson(long userSnowflake, @NonNull JSONObject clanJson) {
         String badgeId = clanJson.getString("badge");
-        return new Badge(badgeId, CLAN_BADGE_URL.formatted(userSnowflake, badgeId, DiscordUtils.getMediaExtension(badgeId)));
+        return new ClanBadge(badgeId, CLAN_BADGE_URL.formatted(userSnowflake, badgeId, DiscordUtils.getMediaExtension(badgeId)));
     }
 }
