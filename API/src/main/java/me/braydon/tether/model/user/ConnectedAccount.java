@@ -4,10 +4,7 @@ import kong.unirest.core.json.JSONArray;
 import kong.unirest.core.json.JSONObject;
 import lombok.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A linked connection to a {@link DiscordUser}.
@@ -49,7 +46,7 @@ public class ConnectedAccount {
      */
     @NonNull
     public static Set<ConnectedAccount> fromJson(@NonNull JSONObject userJson) {
-        Set<ConnectedAccount> connectedAccounts = new HashSet<>();
+        Set<ConnectedAccount> connectedAccounts = new LinkedHashSet<>();
         if (userJson.has("connected_accounts")) {
             JSONArray accountsArray = userJson.getJSONArray("connected_accounts");
             for (int i = 0; i < accountsArray.length(); i++) {
