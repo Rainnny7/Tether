@@ -45,7 +45,7 @@ public final class DiscordService {
      * A cache of users retrieved from Discord.
      */
     private final Cache<Long, CachedDiscordUser> cachedUsers = Caffeine.newBuilder()
-            .expireAfterAccess(3L, TimeUnit.MINUTES)
+            .expireAfterWrite(3L, TimeUnit.MINUTES)
             .build();
 
     @Value("${discord.bot-token}")
