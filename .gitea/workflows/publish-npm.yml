@@ -5,9 +5,9 @@ on:
     branches: ["master"]
     paths:
       [
-        ".gitea/workflows/publish-js-sdk.yml",
-        "JS-SDK/**",
-        "!JS-SDK/README.md",
+        ".gitea/workflows/publish-npm.yml",
+        "use-tether/**",
+        "!use-tether/README.md",
         "!README.md",
         "!LICENSE.md",
       ]
@@ -17,7 +17,7 @@ jobs:
     runs-on: "ubuntu-latest"
     defaults:
       run:
-        working-directory: "./JS-SDK"
+        working-directory: "./use-tether"
 
     # Steps to run
     steps:
