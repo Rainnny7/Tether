@@ -44,7 +44,6 @@ export const useTetherWS = (
                 ) as UserStatusPacket;
                 if (statusPacket.op === 1) {
                     setUser(statusPacket.user);
-                    console.log("user status update", statusPacket.user);
                 }
             });
         };
