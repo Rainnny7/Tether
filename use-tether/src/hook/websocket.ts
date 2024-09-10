@@ -17,6 +17,7 @@ export const useTetherWS = (
     config: TetherConfig = {
         endpoint: "usetether.rest",
         secure: true,
+        debug: false,
     }
 ): DiscordUser | undefined => {
     const { endpoint, secure, debug } = config;

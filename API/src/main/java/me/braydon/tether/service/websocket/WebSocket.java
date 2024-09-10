@@ -57,7 +57,6 @@ public class WebSocket extends TextWebSocketHandler {
                 }
                 for (WebSocketClient client : activeSessions.values()) {
                     String sessionId = client.getSession().getId();
-                    System.out.println("client.getSession().getId() = " + sessionId);
 
                     // Disconnect users that have not been active for 30 seconds
                     if (client.getListeningTo() == null && ((System.currentTimeMillis() - client.getConnected()) >= TimeUnit.SECONDS.toMillis(30L))) {
@@ -66,20 +65,12 @@ public class WebSocket extends TextWebSocketHandler {
                         continue;
                     }
                     if (client.getListeningTo() == null) {
-                        System.err.println("NOT LISTENING!!!");
                         continue;
                     }
                     // Notify the listening client of the user's status if it has changed
                     try {
-                        DiscordUser user = discordService.getUserBySnowflake(client.getListeningTo()).getUser();
-                        System.out.println("user = " + user);
-                        if (!user.equals(client.getLastUser())) {
-                            client.setLastUser(user);
-                            dispatch(client.getSession(), new UserStatusPacket(user));
-                        }
+                        dispatchUserStatus(client);
                     } catch (BadRequestException | ServiceUnavailableException | ResourceNotFoundException ex) {
-                        System.err.println(ex.getLocalizedMessage());
-                        System.err.println("STOPPED LISTENING TO USER!!!!!!!!!!!!!!");
                         client.setListeningTo(null);
                         dispatch(client.getSession(), new ErrorMessagePacket(ex.getLocalizedMessage()));
                     }
@@ -129,8 +120,9 @@ public class WebSocket extends TextWebSocketHandler {
 
             // Handle the packet
             if (packet instanceof ListenToUserPacket listenToUserPacket) {
-                client.setListeningTo(listenToUserPacket.getSnowflake());
                 log.info("Session {} is listening to user updates for {}", sessionId, client.getListeningTo());
+                client.setListeningTo(listenToUserPacket.getSnowflake());
+                dispatchUserStatus(client); // Dispatch user status upon listen
             }
         } catch (JsonSyntaxException ex) { // The syntax provided is invalid, close the session
             session.close(CloseStatus.NOT_ACCEPTABLE.withReason("Invalid payload"));
@@ -149,6 +141,14 @@ public class WebSocket extends TextWebSocketHandler {
         String sessionId = session.getId();
         activeSessions.remove(sessionId);
         log.info("Session closed ({}): {}", status, sessionId);
+    }
+
+    private void dispatchUserStatus(@NonNull WebSocketClient client) {
+        DiscordUser user = discordService.getUserBySnowflake(client.getListeningTo()).getUser();
+        if (!user.equals(client.getLastUser())) {
+            client.setLastUser(user);
+            dispatch(client.getSession(), new UserStatusPacket(user));
+        }
     }
 
     /**
