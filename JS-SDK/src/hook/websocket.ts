@@ -23,20 +23,21 @@ export const useTetherWS = (
         /**
          * Establish a connection with the API.
          */
-        function connect() {
+        const connect = () => {
             console.log("[Tether] Connecting to the WebSocket server...");
             socket = new WebSocket(url); // Connect to the gateway
             socket.addEventListener("open", () => {
-                console.log("[Tether] WebSocket connection established!");
-                console.log("attempt to lsn to", snowflake);
+                console.log(
+                    "[Tether] WebSocket connection established!",
+                    snowflake
+                );
             });
-            // socket.addEventListener("close", connect);
+            socket.addEventListener("close", connect);
 
             socket.addEventListener("message", (event) => {
                 console.log("data:", event.data);
             });
-        }
-
+        };
         connect();
 
         // Cleanup
