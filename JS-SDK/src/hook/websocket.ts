@@ -45,3 +45,4 @@ export const useTetherWS = (
 
     return user;
 };
+export default useTetherWS;
