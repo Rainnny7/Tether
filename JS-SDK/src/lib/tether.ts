@@ -1,7 +1,7 @@
-import TetherConfig from "@/types/config";
-import DiscordUser from "@/types/user";
 import { useEffect, useState } from "react";
-import Snowflake from "@/types/snowflake";
+import { Snowflake } from "@/types/snowflake";
+import { TetherConfig } from "@/types/config";
+import { DiscordUser } from "@/types/user";
 
 export const useTetherWS = (
     snowflake: Snowflake,
@@ -14,6 +14,10 @@ export const useTetherWS = (
 
     const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     useEffect(() => {
+        // Prevent from running on the server
+        if (typeof window === "undefined") {
+            return;
+        }
         let socket: WebSocket; // The current WebSocket connection
 
         /**

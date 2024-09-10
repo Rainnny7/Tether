@@ -1,4 +1,4 @@
-type DiscordUser = {
+export type DiscordUser = {
     /**
      * The unique snowflake of this user.
      */
@@ -69,7 +69,7 @@ type DiscordUser = {
 /**
  * A user's flags.
  */
-type UserFlags = {
+export type UserFlags = {
     /**
      * The list of flags the user has.
      */
@@ -101,7 +101,7 @@ type UserFlags = {
 /**
  * A user's avatar.
  */
-type Avatar = {
+export type Avatar = {
     /**
      * The id of the user's avatar.
      */
@@ -116,7 +116,7 @@ type Avatar = {
 /**
  * A user's banner.
  */
-type Banner = {
+export type Banner = {
     /**
      * The id of the user's avatar.
      */
@@ -131,7 +131,7 @@ type Banner = {
 /**
  * A user's Spotify activity data.
  */
-type SpotifyActivity = {
+export type SpotifyActivity = {
     /**
      * The currently playing song.
      */
@@ -167,5 +167,3 @@ type SpotifyActivity = {
      */
     ends: number;
 };
-
-export default DiscordUser;

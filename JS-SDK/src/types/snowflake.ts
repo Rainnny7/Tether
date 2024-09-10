@@ -1,2 +1,1 @@
-type Snowflake = `${bigint}`;
-export default Snowflake;
+export type Snowflake = `${bigint}`;

@@ -1,4 +1,4 @@
-type TetherConfig = {
+export type TetherConfig = {
     /**
      * The API endpoint to connect to.
      */
@@ -9,4 +9,3 @@ type TetherConfig = {
      */
     secure?: boolean;
 };
-export default TetherConfig;
