@@ -37,13 +37,7 @@ export type DiscordUser = {
     /**
      * The online status of this user, if known.
      */
-    onlineStatus:
-        | "ONLINE"
-        | "IDLE"
-        | "DO_NOT_DISTURB"
-        | "OFFLINE"
-        | "UNKNOWN"
-        | undefined;
+    onlineStatus: "ONLINE" | "IDLE" | "DO_NOT_DISTURB" | "OFFLINE";
 
     /**
      * The clients this user is active on, if known.

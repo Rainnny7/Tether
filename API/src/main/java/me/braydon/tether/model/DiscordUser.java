@@ -51,9 +51,9 @@ public final class DiscordUser {
     @NonNull private final String accentColor;
 
     /**
-     * The online status of this user, if known.
+     * The online status of this user.
      */
-    private final OnlineStatus onlineStatus;
+    @NonNull private final OnlineStatus onlineStatus;
 
     /**
      * The clients this user is active on, if known.
@@ -95,7 +95,11 @@ public final class DiscordUser {
         Banner banner = profile.getBannerId() == null || profile.getBannerUrl() == null ? null : new Banner(profile.getBannerId(), profile.getBannerUrl());
         String accentColor = String.format("#%06X", (0xFFFFFF & profile.getAccentColorRaw()));
 
-        OnlineStatus onlineStatus = member == null ? null : member.getOnlineStatus();
+        OnlineStatus onlineStatus = member == null ? OnlineStatus.OFFLINE : member.getOnlineStatus();
+        if (onlineStatus == OnlineStatus.UNKNOWN) {
+            onlineStatus = OnlineStatus.OFFLINE;
+        }
+
         EnumSet<ClientType> activeClients = member == null ? null : member.getActiveClients();
         List<Activity> activities = member == null ? null : member.getActivities();
         SpotifyActivity spotify = null;
