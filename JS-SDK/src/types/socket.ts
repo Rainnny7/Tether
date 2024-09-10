@@ -1,6 +1,6 @@
 import { DiscordUser } from "@/types/user";
 
-export type SocketPacket = {
+type SocketPacket = {
     /**
      * The OP code for this packet.
      */

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Snowflake } from "@/types/snowflake";
 import { TetherConfig } from "@/types/config";
 import { DiscordUser } from "@/types/user";
-import { SocketPacket, UserStatusPacket } from "@/types/socket";
+import { UserStatusPacket } from "@/types/socket";
 
 export const useTetherWS = (
     snowflake: Snowflake,
@@ -39,12 +39,12 @@ export const useTetherWS = (
             socket.addEventListener("close", connect); // Reconnect on close
 
             socket.addEventListener("message", (event) => {
-                const packet: SocketPacket = JSON.parse(
+                const statusPacket: UserStatusPacket = JSON.parse(
                     event.data
-                ) as SocketPacket;
-                if (packet.op === 1) {
-                    setUser((packet as UserStatusPacket).user);
-                    console.log("user status update", user);
+                ) as UserStatusPacket;
+                if (statusPacket.op === 1) {
+                    setUser(statusPacket.user);
+                    console.log("user status update", statusPacket.user);
                 }
             });
         };
