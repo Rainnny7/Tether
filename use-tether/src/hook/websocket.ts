@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Snowflake } from "@/types/snowflake";
-import { TetherConfig } from "@/types/config";
+import { defaultConfig, TetherConfig } from "@/types/config";
 import { UserStatusPacket } from "@/types/socket";
 import { DiscordUser } from "@/types/user/discord-user";
 
@@ -10,17 +10,13 @@ import { DiscordUser } from "@/types/user/discord-user";
  * the given snowflake.
  *
  * @param snowflake the user's snowflake
- * @param config the Tether config
+ * @param config the optional Tether config
  */
 export const useTetherWS = (
     snowflake: Snowflake,
-    config: TetherConfig = {
-        endpoint: "api.usetether.rest",
-        secure: true,
-        debug: false,
-    }
+    config?: TetherConfig | undefined
 ): DiscordUser | undefined => {
-    const { endpoint, secure, debug } = config;
+    const { endpoint, secure, debug } = { ...defaultConfig, ...config };
     const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     const [user, setUser] = useState<DiscordUser | undefined>();
 

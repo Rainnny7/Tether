@@ -1,3 +1,9 @@
+export const defaultConfig: TetherConfig = {
+    endpoint: "api.usetether.rest",
+    secure: true,
+    debug: false,
+};
+
 export type TetherConfig = {
     /**
      * The API endpoint to connect to.
