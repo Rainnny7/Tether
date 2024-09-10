@@ -19,7 +19,7 @@ export const useTetherWS = (
         secure: true,
     }
 ): DiscordUser | undefined => {
-    const { endpoint, secure } = config;
+    const { endpoint, secure, debug } = config;
     const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     const [user, setUser] = useState<DiscordUser | undefined>();
 
@@ -35,19 +35,34 @@ export const useTetherWS = (
          */
         const connect = () => {
             console.log("[Tether] Connecting to the WebSocket server...");
+            if (debug) {
+                console.debug("[Tether] Endpoint:", url);
+            }
             socket = new WebSocket(url); // Connect to the gateway
 
             // Track the user when the WS connects
             socket.addEventListener("open", () => {
+                if (debug) {
+                    console.debug("[Tether] Sending listen to user packet...");
+                }
                 socket.send(JSON.stringify({ op: 0, snowflake: snowflake }));
                 console.log("[Tether] WebSocket connection established!");
             });
-            socket.addEventListener("close", connect); // Reconnect on close
+            socket.addEventListener("close", () => {
+                if (debug) {
+                    console.debug(
+                        "[Tether] Connection to the WS server was lost, reconnecting..."
+                    );
+                }
+                connect();
+            }); // Reconnect on close
 
             socket.addEventListener("message", (event) => {
-                const statusPacket: UserStatusPacket = JSON.parse(
-                    event.data
-                ) as UserStatusPacket;
+                const json = JSON.parse(event.data);
+                if (debug) {
+                    console.debug("[Tether] Received Packet:", json);
+                }
+                const statusPacket: UserStatusPacket = json as UserStatusPacket;
                 if (statusPacket.op === 1) {
                     setUser(statusPacket.user);
                 }

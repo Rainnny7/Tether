@@ -8,4 +8,9 @@ export type TetherConfig = {
      * Whether the connection should be secure.
      */
     secure?: boolean;
+
+    /**
+     * Whether to enable debugging.
+     */
+    debug?: boolean;
 };
