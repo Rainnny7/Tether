@@ -19,7 +19,7 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"build": "bun run build.mjs",
+		"build": "tsup",
 		"prepublishOnly": "bun run build"
 	},
 	"files": [
@@ -29,7 +29,6 @@
 		"@types/bun": "latest",
 		"@types/react": "^18.3.5",
 		"@types/react-dom": "^18.3.0",
-		"bun-plugin-dts": "^0.2.2",
 		"react": "^18.3.1",
 		"react-dom": "18.3.1"
 	},
@@ -37,5 +36,8 @@
 		"typescript": "^5.0.0",
 		"react": "*",
 		"react-dom": "*"
+	},
+	"dependencies": {
+		"tsup": "^8.2.4"
 	}
 }

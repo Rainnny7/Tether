@@ -12,9 +12,8 @@ export const useTetherWS = (
     const [user] = useState<Snowflake>(snowflake);
 
     useEffect(() => {
-        console.log("HELLO WORLD");
+        console.log("HELLO WORLD", endpoint, secure);
     }, [snowflake]);
 
     return user;
 };
-export default useTetherWS;
