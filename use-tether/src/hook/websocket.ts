@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Snowflake } from "@/types/snowflake";
 import { TetherConfig } from "@/types/config";
-import { DiscordUser } from "@/types/user";
 import { UserStatusPacket } from "@/types/socket";
+import { DiscordUser } from "@/types/user/discord-user";
 
 /**
  * Connect to the WebSocket and listen

@@ -1,4 +1,4 @@
-import { DiscordUser } from "@/types/user";
+import { DiscordUser } from "@/types/user/user";
 
 type SocketPacket = {
     /**

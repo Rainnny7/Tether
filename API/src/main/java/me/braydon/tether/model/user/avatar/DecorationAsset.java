@@ -14,12 +14,12 @@ public class DecorationAsset {
     private static final String DECORATION_URL = "https://cdn.discordapp.com/avatar-decoration-presets/%s.png";
 
     /**
-     * The id of the clan badge.
+     * The id of this decoration asset.
      */
     @NonNull private final String id;
 
     /**
-     * The URL of the clan badge.
+     * The URL of this decoration asset.
      */
     @NonNull private final String url;
 

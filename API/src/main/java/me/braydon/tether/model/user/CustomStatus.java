@@ -22,7 +22,7 @@ public class CustomStatus {
     @NonNull private final String value;
 
     /**
-     * The unicode emoji for this status.
+     * The unicode emoji for this status, null if none.
      */
     private final String emoji;
 
