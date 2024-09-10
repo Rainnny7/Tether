@@ -5,7 +5,7 @@ import kong.unirest.core.json.JSONObject;
 import lombok.*;
 import me.braydon.tether.model.user.DiscordUser;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -43,7 +43,7 @@ public class UserBadge {
      */
     @NonNull
     public static Set<UserBadge> fromJson(@NonNull JSONObject userJson) {
-        Set<UserBadge> badges = new HashSet<>();
+        Set<UserBadge> badges = new LinkedHashSet<>();
         if (!userJson.has("badges")) {
             return badges;
         }
