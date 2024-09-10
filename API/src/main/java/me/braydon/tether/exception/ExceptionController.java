@@ -26,7 +26,7 @@ public final class ExceptionController extends AbstractErrorController {
     public ExceptionController(@NonNull ErrorAttributes errorAttributes) {
         super(errorAttributes);
     }
-    
+
     @RequestMapping @ResponseBody @NonNull
     public ResponseEntity<ErrorResponse> onError(@NonNull HttpServletRequest request) {
         Map<String, Object> error = getErrorAttributes(request, ErrorAttributeOptions.of(

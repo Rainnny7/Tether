@@ -10,6 +10,10 @@ logging:
 
 # Discord Configuration
 discord:
+  # The user account token also for general API calls
+  user-account-token: "CHANGE_ME"
+
+  # The bot token for realtime API calls (online status, activities, etc)
   bot-token: "CHANGE_ME"
 
 # Spring Configuration

@@ -3,7 +3,7 @@ package me.braydon.tether.model.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
-import me.braydon.tether.model.DiscordUser;
+import me.braydon.tether.model.user.DiscordUser;
 
 /**
  * A response for a successful Discord user request.

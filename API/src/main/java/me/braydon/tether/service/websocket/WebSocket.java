@@ -9,7 +9,7 @@ import me.braydon.tether.config.AppConfig;
 import me.braydon.tether.exception.impl.BadRequestException;
 import me.braydon.tether.exception.impl.ResourceNotFoundException;
 import me.braydon.tether.exception.impl.ServiceUnavailableException;
-import me.braydon.tether.model.DiscordUser;
+import me.braydon.tether.model.user.DiscordUser;
 import me.braydon.tether.packet.Packet;
 import me.braydon.tether.packet.PacketRegistry;
 import me.braydon.tether.packet.impl.websocket.misc.ErrorMessagePacket;
@@ -147,7 +147,7 @@ public class WebSocket extends TextWebSocketHandler {
      * Send a packet to the given session.
      *
      * @param session the session to send to
-     * @param packet the packet to send
+     * @param packet  the packet to send
      */
     @SneakyThrows
     private void dispatch(@NonNull WebSocketSession session, @NonNull Packet packet) {

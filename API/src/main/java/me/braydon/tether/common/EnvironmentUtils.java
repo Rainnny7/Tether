@@ -12,6 +12,7 @@ public final class EnvironmentUtils {
      * Is the app running in a production environment?
      */
     @Getter private static final boolean production;
+
     static {
         String appEnv = System.getenv("APP_ENV");
         production = appEnv != null && (appEnv.equals("production"));

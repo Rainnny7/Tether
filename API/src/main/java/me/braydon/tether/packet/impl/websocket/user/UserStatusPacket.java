@@ -1,7 +1,7 @@
 package me.braydon.tether.packet.impl.websocket.user;
 
 import lombok.NonNull;
-import me.braydon.tether.model.DiscordUser;
+import me.braydon.tether.model.user.DiscordUser;
 import me.braydon.tether.packet.OpCode;
 import me.braydon.tether.packet.Packet;
 

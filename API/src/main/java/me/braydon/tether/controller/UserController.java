@@ -36,8 +36,7 @@ public final class UserController {
      */
     @GetMapping("/{snowflake}") @ResponseBody @NonNull
     public ResponseEntity<DiscordUserResponse> getUserBySnowflake(@PathVariable @NonNull String snowflake)
-            throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException
-    {
+            throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
         return ResponseEntity.ok(discordService.getUserBySnowflake(snowflake));
     }
 }

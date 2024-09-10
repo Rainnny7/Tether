@@ -3,7 +3,7 @@ package me.braydon.tether.service.websocket;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import me.braydon.tether.model.DiscordUser;
+import me.braydon.tether.model.user.DiscordUser;
 import org.springframework.web.socket.WebSocketSession;
 
 /**
@@ -18,13 +18,15 @@ public class WebSocketClient {
      * The session this client is for.
      */
     @NonNull private final WebSocketSession session;
-
+    /**
+     * The unix time this client connected.
+     */
+    private final long connected;
     /**
      * The snowflake of the user this client
      * is listening to for updates, if any.
      */
     private Long listeningTo;
-
     /**
      * The last user this client
      * has been sent a status for.
@@ -34,11 +36,6 @@ public class WebSocketClient {
      * </p>
      */
     private DiscordUser lastUser;
-
-    /**
-     * The unix time this client connected.
-     */
-    private final long connected;
 
     protected WebSocketClient(@NonNull WebSocketSession session) {
         this.session = session;

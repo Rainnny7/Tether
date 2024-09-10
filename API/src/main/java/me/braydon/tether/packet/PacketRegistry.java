@@ -17,6 +17,7 @@ public final class PacketRegistry {
      * A registry of packets, identified by their op code.
      */
     private static final Map<Integer, Class<? extends Packet>> REGISTRY = Collections.synchronizedMap(new HashMap<>());
+
     static {
         register(OpCode.LISTEN_TO_USER, ListenToUserPacket.class);
         register(OpCode.USER_STATUS, UserStatusPacket.class);
