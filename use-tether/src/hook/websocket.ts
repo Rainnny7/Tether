@@ -15,7 +15,7 @@ import { DiscordUser } from "@/types/user/discord-user";
 export const useTetherWS = (
     snowflake: Snowflake,
     config: TetherConfig = {
-        endpoint: "usetether.rest",
+        endpoint: "api.usetether.rest",
         secure: true,
         debug: false,
     }
