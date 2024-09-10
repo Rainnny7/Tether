@@ -4,13 +4,22 @@ import { TetherConfig } from "@/types/config";
 import { DiscordUser } from "@/types/user";
 import { UserStatusPacket } from "@/types/socket";
 
+/**
+ * Connect to the WebSocket and listen
+ * for status updates for the user with
+ * the given snowflake.
+ *
+ * @param snowflake the user's snowflake
+ * @param config the Tether config
+ */
 export const useTetherWS = (
     snowflake: Snowflake,
-    { endpoint, secure }: TetherConfig = {
+    config: TetherConfig = {
         endpoint: "usetether.rest",
         secure: true,
     }
 ): DiscordUser | undefined => {
+    const { endpoint, secure } = config;
     const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
     const [user, setUser] = useState<DiscordUser | undefined>();
 
