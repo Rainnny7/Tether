@@ -173,6 +173,9 @@ public final class DiscordUser {
         String bannerColor = detailsJson.optString("banner_color", null);
 
         String bio = detailsJson.optString("bio", null);
+        if (bio != null && (bio = bio.trim()).isEmpty()) {
+            bio = null;
+        }
         String accentColor = String.format("#%06X", detailsJson.isNull("accent_color") ? 0xFFFFFF
                 : 0xFFFFFF & detailsJson.getInt("accent_color"));
         Clan clan = detailsJson.isNull("clan") ? null : Clan.fromJson(detailsJson.getJSONObject("clan"));
@@ -183,6 +186,9 @@ public final class DiscordUser {
         String pronouns = null;
         if (profileJson != null) {
             pronouns = profileJson.optString("pronouns", null);
+            if (pronouns != null && (pronouns = pronouns.trim()).isEmpty()) {
+                pronouns = null;
+            }
         }
 
         boolean bot = detailsJson.optBoolean("bot", false);
@@ -196,16 +202,14 @@ public final class DiscordUser {
 
         // Get the user's active clients and activities
         EnumSet<ClientType> activeClients = member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients();
-        List<Activity> activities = member == null ? null : member.getActivities();
+        List<Activity> activities = member == null ? Collections.emptyList() : member.getActivities();
         SpotifyActivity spotify = null;
-        if (activities != null) {
-            for (Activity activity : activities) {
-                if (!activity.getName().equals("Spotify") || !activity.isRich()) {
-                    continue;
-                }
-                spotify = SpotifyActivity.fromActivity(Objects.requireNonNull(activity.asRichPresence()));
-                break;
+        for (Activity activity : activities) {
+            if (!activity.getName().equals("Spotify") || !activity.isRich()) {
+                continue;
             }
+            spotify = SpotifyActivity.fromActivity(Objects.requireNonNull(activity.asRichPresence()));
+            break;
         }
 
         // Get the user's badges
