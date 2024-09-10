@@ -40,10 +40,7 @@ export const useTetherWS = (
             // Track the user when the WS connects
             socket.addEventListener("open", () => {
                 socket.send(JSON.stringify({ op: 0, snowflake: snowflake }));
-                console.log(
-                    "[Tether] WebSocket connection established!",
-                    snowflake
-                );
+                console.log("[Tether] WebSocket connection established!");
             });
             socket.addEventListener("close", connect); // Reconnect on close
 
