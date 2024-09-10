@@ -4,8 +4,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.RichPresence;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -69,24 +71,31 @@ public class SpotifyActivity {
     /**
      * Construct a Spotify activity for a user.
      *
-     * @param richPresence the raw Discord data
-     * @return the constructed activity
+     * @param activities the user's activities
+     * @return the constructed activity, null if none
      */
-    @NonNull @SuppressWarnings("DataFlowIssue")
-    protected static SpotifyActivity fromActivity(@NonNull RichPresence richPresence) {
-        String trackUrl = "https://open.spotify.com/track/" + richPresence.getSyncId();
+    @SuppressWarnings("DataFlowIssue")
+    protected static SpotifyActivity fromActivities(@NonNull List<Activity> activities) {
+        for (Activity activity : activities) {
+            if (!activity.getName().equals("Spotify") || !activity.isRich()) {
+                continue;
+            }
+            RichPresence richPresence = activity.asRichPresence();
+            String trackUrl = "https://open.spotify.com/track/" + richPresence.getSyncId();
 
-        // Track progress
-        long started = Objects.requireNonNull(richPresence.getTimestamps()).getStart();
-        long ends = richPresence.getTimestamps().getEnd();
+            // Track progress
+            long started = Objects.requireNonNull(richPresence.getTimestamps()).getStart();
+            long ends = richPresence.getTimestamps().getEnd();
 
-        long trackLength = ends - started;
-        long trackProgress = Math.min(System.currentTimeMillis() - started, trackLength);
+            long trackLength = ends - started;
+            long trackProgress = Math.min(System.currentTimeMillis() - started, trackLength);
 
-        return new SpotifyActivity(
-                richPresence.getSyncId(), richPresence.getDetails(), richPresence.getState().replace(";", ","),
-                richPresence.getLargeImage().getText(), richPresence.getLargeImage().getUrl(), trackUrl, trackProgress,
-                trackLength, started, ends
-        );
+            return new SpotifyActivity(
+                    richPresence.getSyncId(), richPresence.getDetails(), richPresence.getState().replace(";", ","),
+                    richPresence.getLargeImage().getText(), richPresence.getLargeImage().getUrl(), trackUrl, trackProgress,
+                    trackLength, started, ends
+            );
+        }
+        return null;
     }
 }

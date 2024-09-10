@@ -1,6 +1,5 @@
 package me.braydon.tether.model.user;
 
-import kong.unirest.core.json.JSONArray;
 import kong.unirest.core.json.JSONObject;
 import lombok.*;
 import me.braydon.tether.common.DiscordUtils;
@@ -14,7 +13,10 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.ClientType;
 import net.dv8tion.jda.api.entities.Member;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A model of a Discord user.
@@ -36,6 +38,11 @@ public final class DiscordUser {
      * The username of this user.
      */
     @NonNull private final String username;
+
+    /**
+     * This user's legacy username, if any.
+     */
+    private final String legacyUsername;
 
     /**
      * The display name of this user, if any.
@@ -71,6 +78,11 @@ public final class DiscordUser {
      * The banner color (hex) of this user, if any.
      */
     private final String bannerColor;
+
+    /**
+     * The custom status of this user, if any.
+     */
+    private final CustomStatus customStatus;
 
     /**
      * The user's bio, if any.
@@ -133,16 +145,6 @@ public final class DiscordUser {
     private final boolean bot;
 
     /**
-     * Whether this user is a legacy user.
-     * <p>
-     * A user is "legacy" if they haven't yet
-     * moved to the new username system and got
-     * rid of their discriminator.
-     * </p>
-     */
-    private final boolean legacy;
-
-    /**
      * The unix time of when this user joined Discord.
      */
     private final long createdAt;
@@ -160,17 +162,11 @@ public final class DiscordUser {
         JSONObject detailsJson = userJson.has("user") ? userJson.getJSONObject("user") : userJson;
 
         long snowflake = Long.parseLong(detailsJson.getString("id"));
-        String username = detailsJson.getString("username");
-        String displayName = detailsJson.optString("global_name", null);
+        String legacyUsername = userJson.optString("legacy_username", null);
         int discriminator = Integer.parseInt(detailsJson.getString("discriminator"));
-        boolean isUserLegacy = discriminator > 0;
-        UserFlags flags = UserFlags.fromJson(detailsJson);
 
-        Avatar avatar = Avatar.fromJson(snowflake, discriminator, isUserLegacy, detailsJson);
         AvatarDecoration avatarDecoration = detailsJson.isNull("avatar_decoration_data") ? null
                 : AvatarDecoration.fromJson(detailsJson.getJSONObject("avatar_decoration_data"));
-        Banner banner = Banner.fromJson(snowflake, detailsJson);
-        String bannerColor = detailsJson.optString("banner_color", null);
 
         String bio = detailsJson.optString("bio", null);
         if (bio != null && (bio = bio.trim()).isEmpty()) {
@@ -191,50 +187,23 @@ public final class DiscordUser {
             }
         }
 
-        boolean bot = detailsJson.optBoolean("bot", false);
-        long created = DiscordUtils.getTimeCreated(snowflake);
-
         // Get the user's online status
         OnlineStatus onlineStatus = member == null ? OnlineStatus.OFFLINE : member.getOnlineStatus();
         if (onlineStatus == OnlineStatus.UNKNOWN) {
             onlineStatus = OnlineStatus.OFFLINE;
         }
 
-        // Get the user's active clients and activities
-        EnumSet<ClientType> activeClients = member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients();
+        // Get the user's activities
         List<Activity> activities = member == null ? Collections.emptyList() : member.getActivities();
-        SpotifyActivity spotify = null;
-        for (Activity activity : activities) {
-            if (!activity.getName().equals("Spotify") || !activity.isRich()) {
-                continue;
-            }
-            spotify = SpotifyActivity.fromActivity(Objects.requireNonNull(activity.asRichPresence()));
-            break;
-        }
-
-        // Get the user's badges
-        Set<UserBadge> badges = new HashSet<>();
-        if (userJson.has("badges")) {
-            JSONArray badgesArray = userJson.getJSONArray("badges");
-            for (int i = 0; i < badgesArray.length(); i++) {
-                badges.add(UserBadge.fromJson(badgesArray.getJSONObject(i)));
-            }
-        }
-
-        // Get the user's connected accounts
-        Set<ConnectedAccount> connectedAccounts = new HashSet<>();
-        if (userJson.has("connected_accounts")) {
-            JSONArray accountsArray = userJson.getJSONArray("connected_accounts");
-            for (int i = 0; i < accountsArray.length(); i++) {
-                connectedAccounts.add(ConnectedAccount.fromJson(accountsArray.getJSONObject(i)));
-            }
-        }
 
         // Finally return the constructed user
         return new DiscordUser(
-                snowflake, username, displayName, discriminator, flags, avatar, avatarDecoration, banner, bannerColor, bio,
-                pronouns, accentColor, onlineStatus, activeClients, activities, spotify, badges, connectedAccounts, clan,
-                nitroSubscription, bot, isUserLegacy, created
+                snowflake, detailsJson.getString("username"), legacyUsername, detailsJson.optString("global_name", null),
+                discriminator, UserFlags.fromJson(detailsJson), Avatar.fromJson(snowflake, discriminator, legacyUsername != null, detailsJson), avatarDecoration,
+                Banner.fromJson(snowflake, detailsJson), detailsJson.optString("banner_color", null), CustomStatus.fromActivities(activities),
+                bio, pronouns, accentColor, onlineStatus, member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients(), activities,
+                SpotifyActivity.fromActivities(activities), UserBadge.fromJson(userJson), ConnectedAccount.fromJson(userJson), clan, nitroSubscription,
+                detailsJson.optBoolean("bot", false), DiscordUtils.getTimeCreated(snowflake)
         );
     }
 }

@@ -1,8 +1,12 @@
 package me.braydon.tether.model.user.badge;
 
+import kong.unirest.core.json.JSONArray;
 import kong.unirest.core.json.JSONObject;
 import lombok.*;
 import me.braydon.tether.model.user.DiscordUser;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A {@link DiscordUser}'s avatar.
@@ -32,17 +36,26 @@ public class UserBadge {
     private final String link;
 
     /**
-     * Construct a badge for a user.
+     * Construct the badges for a user.
      *
-     * @param badgeJson the badge json
-     * @return the constructed user badge
+     * @param userJson the user's json
+     * @return the constructed badges
      */
     @NonNull
-    public static UserBadge fromJson(@NonNull JSONObject badgeJson) {
-        String id = badgeJson.getString("id");
-        String description = badgeJson.getString("description");
-        UserBadgeIcon icon = UserBadgeIcon.fromJson(badgeJson);
-        String link = badgeJson.optString("link", null);
-        return new UserBadge(id, description, icon, link);
+    public static Set<UserBadge> fromJson(@NonNull JSONObject userJson) {
+        Set<UserBadge> badges = new HashSet<>();
+        if (!userJson.has("badges")) {
+            return badges;
+        }
+        JSONArray badgesArray = userJson.getJSONArray("badges");
+        for (int i = 0; i < badgesArray.length(); i++) {
+            JSONObject badgeJson = badgesArray.getJSONObject(i);
+            String id = badgeJson.getString("id");
+            String description = badgeJson.getString("description");
+            UserBadgeIcon icon = UserBadgeIcon.fromJson(badgeJson);
+            String link = badgeJson.optString("link", null);
+            badges.add(new UserBadge(id, description, icon, link));
+        }
+        return badges;
     }
 }

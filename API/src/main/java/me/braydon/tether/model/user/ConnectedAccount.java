@@ -1,10 +1,13 @@
 package me.braydon.tether.model.user;
 
+import kong.unirest.core.json.JSONArray;
 import kong.unirest.core.json.JSONObject;
 import lombok.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A linked connection to a {@link DiscordUser}.
@@ -39,25 +42,33 @@ public class ConnectedAccount {
     private final boolean verified;
 
     /**
-     * Construct a connected account for a user.
+     * Construct the connected accounts for a user.
      *
-     * @param accountJson the connected account json
-     * @return the constructed account
+     * @param userJson the user's json
+     * @return the constructed accounts
      */
     @NonNull
-    protected static ConnectedAccount fromJson(@NonNull JSONObject accountJson) {
-        String id = accountJson.getString("id");
-        String type = accountJson.getString("type");
-        String name = accountJson.getString("name");
+    public static Set<ConnectedAccount> fromJson(@NonNull JSONObject userJson) {
+        Set<ConnectedAccount> connectedAccounts = new HashSet<>();
+        if (userJson.has("connected_accounts")) {
+            JSONArray accountsArray = userJson.getJSONArray("connected_accounts");
+            for (int i = 0; i < accountsArray.length(); i++) {
+                JSONObject accountJson = accountsArray.getJSONObject(i);
+                String id = accountJson.getString("id");
+                String type = accountJson.getString("type");
+                String name = accountJson.getString("name");
 
-        Map<String, String> metadata = new HashMap<>();
-        if (accountJson.has("metadata")) {
-            for (Map.Entry<String, Object> entry : accountJson.getJSONObject("metadata").toMap().entrySet()) {
-                metadata.put(entry.getKey(), entry.getValue().toString());
+                Map<String, String> metadata = new HashMap<>();
+                if (accountJson.has("metadata")) {
+                    for (Map.Entry<String, Object> entry : accountJson.getJSONObject("metadata").toMap().entrySet()) {
+                        metadata.put(entry.getKey(), entry.getValue().toString());
+                    }
+                }
+
+                boolean verified = accountJson.getBoolean("verified");
+                connectedAccounts.add(new ConnectedAccount(id, type, name, metadata, verified));
             }
         }
-
-        boolean verified = accountJson.getBoolean("verified");
-        return new ConnectedAccount(id, type, name, metadata, verified);
+        return connectedAccounts;
     }
 }
