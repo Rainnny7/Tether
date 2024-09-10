@@ -4,7 +4,10 @@ import kong.unirest.core.json.JSONArray;
 import kong.unirest.core.json.JSONObject;
 import lombok.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A linked connection to a {@link DiscordUser}.

@@ -80,6 +80,16 @@ public final class DiscordUser {
     private final String bannerColor;
 
     /**
+     * The profile theme of this user, if any.
+     */
+    private final ProfileTheme profileTheme;
+
+    /**
+     * The profile effect this user has, if any.
+     */
+    private final ProfileEffect profileEffect;
+
+    /**
      * The custom status of this user, if any.
      */
     private final CustomStatus customStatus;
@@ -199,11 +209,12 @@ public final class DiscordUser {
         // Finally return the constructed user
         return new DiscordUser(
                 snowflake, detailsJson.getString("username"), legacyUsername, detailsJson.optString("global_name", null),
-                discriminator, UserFlags.fromJson(detailsJson), Avatar.fromJson(snowflake, discriminator, legacyUsername != null, detailsJson), avatarDecoration,
-                Banner.fromJson(snowflake, detailsJson), detailsJson.optString("banner_color", null), CustomStatus.fromActivities(activities),
-                bio, pronouns, accentColor, onlineStatus, member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients(), activities,
-                SpotifyActivity.fromActivities(activities), UserBadge.fromJson(userJson), ConnectedAccount.fromJson(userJson), clan, nitroSubscription,
-                detailsJson.optBoolean("bot", false), DiscordUtils.getTimeCreated(snowflake)
+                discriminator, UserFlags.fromJson(detailsJson), Avatar.fromJson(snowflake, discriminator, legacyUsername != null, detailsJson),
+                avatarDecoration, Banner.fromJson(snowflake, detailsJson), detailsJson.optString("banner_color", null),
+                ProfileTheme.fromJson(profileJson), ProfileEffect.fromJson(profileJson), CustomStatus.fromActivities(activities), bio, pronouns, accentColor,
+                onlineStatus, member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients(), activities, SpotifyActivity.fromActivities(activities),
+                UserBadge.fromJson(userJson), ConnectedAccount.fromJson(userJson), clan, nitroSubscription, detailsJson.optBoolean("bot", false),
+                DiscordUtils.getTimeCreated(snowflake)
         );
     }
 }
