@@ -192,6 +192,11 @@ public final class DiscordUser {
         @NonNull private final String album;
 
         /**
+         * The URL to the art for the currently playing album.
+         */
+        @NonNull private final String albumArtUrl;
+
+        /**
          * The URL to the playing track.
          */
         @NonNull private final String trackUrl;
@@ -224,6 +229,11 @@ public final class DiscordUser {
          */
         @NonNull @SuppressWarnings("DataFlowIssue")
         public static SpotifyActivity fromActivity(@NonNull RichPresence richPresence) {
+            // Obtain track URLs
+            String albumArtUrl = "https://i.scdn.co/image/" + richPresence.getLargeImage().getUrl().split(":")[1];
+            String trackUrl = "https://open.spotify.com/track/" + richPresence.getSyncId();
+
+            // Track progress
             long started = Objects.requireNonNull(richPresence.getTimestamps()).getStart();
             long ends = richPresence.getTimestamps().getEnd();
 
@@ -231,8 +241,8 @@ public final class DiscordUser {
             long trackProgress = Math.min(System.currentTimeMillis() - started, trackLength);
 
             return new SpotifyActivity(
-                    richPresence.getDetails(), richPresence.getState().replace(";", ","),
-                    richPresence.getLargeImage().getText(), trackProgress, trackLength, started, ends
+                    richPresence.getSyncId(), richPresence.getDetails(), richPresence.getState().replace(";", ","),
+                    richPresence.getLargeImage().getText(), albumArtUrl, trackUrl, trackProgress, trackLength, started, ends
             );
         }
     }

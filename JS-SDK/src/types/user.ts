@@ -147,6 +147,11 @@ export type SpotifyActivity = {
     album: string;
 
     /**
+     * The URL to the art for the currently playing album.
+     */
+    albumArtUrl: string;
+
+    /**
      * The URL to the playing track.
      */
     trackUrl: string;
