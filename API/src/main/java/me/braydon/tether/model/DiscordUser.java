@@ -229,8 +229,6 @@ public final class DiscordUser {
          */
         @NonNull @SuppressWarnings("DataFlowIssue")
         public static SpotifyActivity fromActivity(@NonNull RichPresence richPresence) {
-            // Obtain track URLs
-            String albumArtUrl = "https://i.scdn.co/image/" + richPresence.getLargeImage().getUrl().split(":")[1];
             String trackUrl = "https://open.spotify.com/track/" + richPresence.getSyncId();
 
             // Track progress
@@ -242,7 +240,8 @@ public final class DiscordUser {
 
             return new SpotifyActivity(
                     richPresence.getSyncId(), richPresence.getDetails(), richPresence.getState().replace(";", ","),
-                    richPresence.getLargeImage().getText(), albumArtUrl, trackUrl, trackProgress, trackLength, started, ends
+                    richPresence.getLargeImage().getText(), richPresence.getLargeImage().getUrl(), trackUrl,trackProgress,
+                    trackLength, started, ends
             );
         }
     }
