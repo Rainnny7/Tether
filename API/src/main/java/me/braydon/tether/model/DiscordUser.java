@@ -172,7 +172,12 @@ public final class DiscordUser {
     @AllArgsConstructor @Getter
     public static class SpotifyActivity {
         /**
-         * The currently playing song.
+         * The ID of the currently playing track.
+         */
+        @NonNull private final String trackId;
+
+        /**
+         * The name of the currently playing track.
          */
         @NonNull private final String song;
 
@@ -185,6 +190,11 @@ public final class DiscordUser {
          * The album the song is from.
          */
         @NonNull private final String album;
+
+        /**
+         * The URL to the playing track.
+         */
+        @NonNull private final String trackUrl;
 
         /**
          * The current progress of the track (in millis).

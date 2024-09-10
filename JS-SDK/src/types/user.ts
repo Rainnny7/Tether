@@ -127,7 +127,12 @@ export type Banner = {
  */
 export type SpotifyActivity = {
     /**
-     * The currently playing song.
+     * The ID of the currently playing track.
+     */
+    trackId: string;
+
+    /**
+     * The name of the currently playing track.
      */
     song: string;
 
@@ -140,6 +145,11 @@ export type SpotifyActivity = {
      * The album the song is from.
      */
     album: string;
+
+    /**
+     * The URL to the playing track.
+     */
+    trackUrl: string;
 
     /**
      * The current progress of the track (in millis).
