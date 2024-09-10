@@ -56,22 +56,30 @@ public class WebSocket extends TextWebSocketHandler {
                     log.info("Active Sessions: {}", activeSessions.size());
                 }
                 for (WebSocketClient client : activeSessions.values()) {
-                    // Disconnect users that have not been active for 15 seconds
-                    if (client.getListeningTo() == null && ((System.currentTimeMillis() - client.getConnected()) >= TimeUnit.SECONDS.toMillis(15L))) {
+                    String sessionId = client.getSession().getId();
+                    System.out.println("client.getSession().getId() = " + sessionId);
+
+                    // Disconnect users that have not been active for 30 seconds
+                    if (client.getListeningTo() == null && ((System.currentTimeMillis() - client.getConnected()) >= TimeUnit.SECONDS.toMillis(30L))) {
+                        log.info("Disconnecting session {} for being inactive", sessionId);
                         client.getSession().close(CloseStatus.NOT_ACCEPTABLE.withReason("Client is inactive"));
                         continue;
                     }
                     if (client.getListeningTo() == null) {
+                        System.err.println("NOT LISTENING!!!");
                         continue;
                     }
                     // Notify the listening client of the user's status if it has changed
                     try {
                         DiscordUser user = discordService.getUserBySnowflake(client.getListeningTo()).getUser();
+                        System.out.println("user = " + user);
                         if (!user.equals(client.getLastUser())) {
                             client.setLastUser(user);
                             dispatch(client.getSession(), new UserStatusPacket(user));
                         }
                     } catch (BadRequestException | ServiceUnavailableException | ResourceNotFoundException ex) {
+                        System.err.println(ex.getLocalizedMessage());
+                        System.err.println("STOPPED LISTENING TO USER!!!!!!!!!!!!!!");
                         client.setListeningTo(null);
                         dispatch(client.getSession(), new ErrorMessagePacket(ex.getLocalizedMessage()));
                     }
