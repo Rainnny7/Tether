@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Snowflake } from "@/types/snowflake";
 import { TetherConfig } from "@/types/config";
 import { DiscordUser } from "@/types/user";
+import { SocketPacket, UserStatusPacket } from "@/types/socket";
 
 export const useTetherWS = (
     snowflake: Snowflake,
@@ -11,7 +12,7 @@ export const useTetherWS = (
     }
 ): DiscordUser | undefined => {
     const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
-    const [user] = useState<DiscordUser | undefined>();
+    const [user, setUser] = useState<DiscordUser | undefined>();
 
     useEffect(() => {
         // Prevent from running on the server
@@ -26,8 +27,10 @@ export const useTetherWS = (
         const connect = () => {
             console.log("[Tether] Connecting to the WebSocket server...");
             socket = new WebSocket(url); // Connect to the gateway
+
+            // Track the user when the WS connects
             socket.addEventListener("open", () => {
-                socket.send(JSON.stringify({ op: 0, snowflake: snowflake })); // Track the user
+                socket.send(JSON.stringify({ op: 0, snowflake: snowflake }));
                 console.log(
                     "[Tether] WebSocket connection established!",
                     snowflake
@@ -36,7 +39,13 @@ export const useTetherWS = (
             socket.addEventListener("close", connect); // Reconnect on close
 
             socket.addEventListener("message", (event) => {
-                console.log("data:", event.data);
+                const packet: SocketPacket = JSON.parse(
+                    event.data
+                ) as SocketPacket;
+                if (packet.op === 1) {
+                    setUser((packet as UserStatusPacket).user);
+                    console.log("user status update", user);
+                }
             });
         };
         connect();
