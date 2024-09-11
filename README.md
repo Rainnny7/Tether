@@ -1,13 +1,6 @@
 <a id="readme-top"></a>
 
 <!-- Shields -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 [![Discord](https://discord.com/api/guilds/1282396166419648656/widget.png)](https://discord.usetether.rest)
 [![Docs](https://img.shields.io/badge/Docs-darkgreen.svg)](https://git.rainnny.club/Rainnny/Tether/wiki)
 
@@ -15,26 +8,24 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/tether.png" alt="Tether Logo" width="80" height="80">
+    <img src="/Rainnny/Tether/src/branch/master/images/tether.png" alt="Tether Logo" width="80" height="80">
   </a>
 
-<h1 align="center">Tether</h1>
+<h3 align="center">Tether</h3>
   <p align="center">
     An API designed to provide real-time access to a user's Discord data.
     <br />
-    <a href="/wiki"><strong>Explore the docs »</strong></a>
+    <a href="/Rainnny/Tether/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://api.usetether.rest/user/504147739131641857">View Demo</a>
     ·
-    <a href="/issues/new">Report Bug</a>
+    <a href="/Rainnny/Tether/issues/new">Report Bug</a>
   </p>
 </div>
 
 <!-- Table of Contents -->
-
 ## Table of Contents
-
 1. [Features](#features)
 2. [Roadmap](#roadmap)
 3. [Contributing](#contributing)
@@ -76,6 +67,6 @@ you can open an issue with the "enhancement" tag. Don't forget to star the proje
 
 <!-- License -->
 ## License
-Distributed under the MIT License. See `LICENSE.md` for more information.
+Distributed under the MIT License. See <a href="/Rainnny/Tether/src/branch/master/LICENSE.md">LICENSE.md</a> for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
