@@ -7,20 +7,20 @@
 <!-- Greeting -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="/Rainnny/Tether/src/branch/master/images/tether.png" alt="Tether Logo" width="80" height="80">
+  <a href="https://usetether.rest">
+    <img src="https://cdn.rainnny.club/tether.png" alt="Tether Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Tether</h3>
   <p align="center">
     An API designed to provide real-time access to a user's Discord data.
     <br />
-    <a href="/Rainnny/Tether/wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.rainnny.club/books/tether"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://api.usetether.rest/user/504147739131641857">View Demo</a>
     ·
-    <a href="/Rainnny/Tether/issues/new">Report Bug</a>
+    <a href="https://git.rainnny.club/Rainnny/Tether/issues">Report Bug</a>
   </p>
 </div>
 
@@ -67,6 +67,6 @@ you can open an issue with the "enhancement" tag. Don't forget to star the proje
 
 <!-- License -->
 ## License
-Distributed under the MIT License. See <a href="/Rainnny/Tether/src/branch/master/LICENSE.md">LICENSE.md</a> for more information.
+Distributed under the MIT License. See <a href="https://git.rainnny.club/Rainnny/Tether/src/branch/master/LICENSE.md">LICENSE.md</a> for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
