@@ -1,8 +1,14 @@
 <a id="readme-top"></a>
 
 <!-- Shields -->
-[![Discord](https://discord.com/api/guilds/1282396166419648656/widget.png)](https://discord.usetether.rest)
-[![Docs](https://img.shields.io/badge/Docs-darkgreen.svg)](https://git.rainnny.club/Rainnny/Tether/wiki)
+<div align="center">
+  <a href="https://discord.usetether.rest">
+    <img src="https://discord.com/api/guilds/1282396166419648656/widget.png" alt="Discord">
+  </a>
+  <a href="https://git.rainnny.club/Rainnny/Tether/wiki">
+    <img src="https://img.shields.io/badge/Docs-darkgreen.svg" alt="Docs">
+  </a>
+</div>
 
 <!-- Greeting -->
 <br />
