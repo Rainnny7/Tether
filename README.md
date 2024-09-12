@@ -3,10 +3,10 @@
 <!-- Shields -->
 <div align="center">
     <a href="https://discord.usetether.rest">
-        <img src="https://discord.com/api/guilds/1282396166419648656/widget.png" alt="Discord">
+        <img src="https://img.shields.io/discord/1282396166419648656?style=flat&colorA=000000&colorB=000000&label=discord&logo=discord&logoColor=FFFFFF" alt="Discord">
     </a>
     <a href="https://git.rainnny.club/Rainnny/Tether/wiki">
-        <img src="https://img.shields.io/badge/Docs-darkgreen.svg" alt="Docs">
+        <img src="https://img.shields.io/badge/Documenation-f5f5f5?style=flat&colorB=000000" alt="Docs">
     </a>
 </div>
 
