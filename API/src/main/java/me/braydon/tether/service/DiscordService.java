@@ -14,6 +14,8 @@ import lombok.extern.log4j.Log4j2;
 import me.braydon.tether.exception.impl.BadRequestException;
 import me.braydon.tether.exception.impl.ResourceNotFoundException;
 import me.braydon.tether.exception.impl.ServiceUnavailableException;
+import me.braydon.tether.metric.impl.TrackedUsersMetric;
+import me.braydon.tether.metric.impl.UserLookupTimingsMetric;
 import me.braydon.tether.model.response.DiscordUserResponse;
 import me.braydon.tether.model.user.CachedDiscordUser;
 import me.braydon.tether.model.user.DiscordUser;
@@ -23,9 +25,12 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -40,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 @Log4j2(topic = "Discord")
-public final class DiscordService {
+public final class DiscordService extends ListenerAdapter {
     /**
      * A cache of users retrieved from Discord.
      */
@@ -48,11 +53,23 @@ public final class DiscordService {
             .expireAfterWrite(3L, TimeUnit.MINUTES)
             .build();
 
+    /**
+     * The token to use for the bot.
+     */
     @Value("${discord.bot-token}")
     private String botToken;
 
+    /**
+     * The token to use for the user account.
+     */
     @Value("${discord.user-account-token}")
     private String userAccountToken;
+
+    /**
+     * Are metrics enabled?
+     */
+    @Value("${questdb.enabled}")
+    private boolean metricsEnabled;
 
     /**
      * The current instance of the Discord bot.
@@ -62,6 +79,13 @@ public final class DiscordService {
     @PostConstruct
     public void onInitialize() {
         connectBot();
+    }
+
+    @Override
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        if (metricsEnabled) {
+            TrackedUsersMetric.incrementRecentlyWatchedUsers();
+        }
     }
 
     /**
@@ -103,7 +127,11 @@ public final class DiscordService {
             CachedDiscordUser cachedUser = cachedUsers.getIfPresent(snowflake);
             boolean fromCache = cachedUser != null;
             if (cachedUser == null) { // No cache, retrieve fresh data
+                long before = System.currentTimeMillis();
                 cachedUser = new CachedDiscordUser(getUser(snowflake, member != null), System.currentTimeMillis());
+                if (metricsEnabled) {
+                    UserLookupTimingsMetric.track(System.currentTimeMillis() - before);
+                }
                 cachedUsers.put(snowflake, cachedUser);
             }
 
@@ -119,6 +147,20 @@ public final class DiscordService {
             }
             throw ex;
         }
+    }
+
+    /**
+     * Return the amount of users
+     * the bot is tracking.
+     *
+     * @return the tracked user count
+     */
+    public int getTrackedUsers() {
+        int tracked = 0;
+        for (Guild guild : jda.getGuilds()) {
+            tracked += guild.getMemberCount();
+        }
+        return tracked;
     }
 
     /**

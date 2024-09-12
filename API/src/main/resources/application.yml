@@ -8,6 +8,12 @@ logging:
   file:
     path: "./logs"
 
+# Sentry Configuration
+sentry:
+  dsn: "CHANGE_ME"
+  tracesSampleRate: 1.0
+  environment: "development"
+
 # Discord Configuration
 discord:
   # The user account token also for general API calls
@@ -15,6 +21,11 @@ discord:
 
   # The bot token for realtime API calls (online status, activities, etc)
   bot-token: "CHANGE_ME"
+
+# QuestDB Configuration (Metrics)
+questdb:
+  enabled: false
+  uri: "http::addr=localhost:9000;username=tether;password=p4$$w0rd;auto_flush_interval=5000;"
 
 # Spring Configuration
 spring:
