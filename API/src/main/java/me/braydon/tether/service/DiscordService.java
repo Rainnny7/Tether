@@ -2,6 +2,7 @@ package me.braydon.tether.service;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import io.questdb.cutlass.line.LineSenderException;
 import jakarta.annotation.PostConstruct;
 import kong.unirest.core.HttpResponse;
 import kong.unirest.core.HttpStatus;
@@ -130,7 +131,12 @@ public final class DiscordService extends ListenerAdapter {
                 long before = System.currentTimeMillis();
                 cachedUser = new CachedDiscordUser(getUser(snowflake, member != null), System.currentTimeMillis());
                 if (metricsEnabled) {
-                    UserLookupTimingsMetric.track(System.currentTimeMillis() - before);
+                    try {
+                        UserLookupTimingsMetric.track(System.currentTimeMillis() - before);
+                    } catch (LineSenderException | IllegalStateException ignored) {
+                        // This can happen due to no metrics server being
+                        // available, we can safely ignore it and continue
+                    }
                 }
                 cachedUsers.put(snowflake, cachedUser);
             }
