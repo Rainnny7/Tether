@@ -105,7 +105,6 @@
             <scope>compile</scope>
         </dependency>
 
-
         <!-- Error Reporting & Metrics -->
         <dependency>
             <groupId>io.sentry</groupId>

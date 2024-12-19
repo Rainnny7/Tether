@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
 import net.dv8tion.jda.api.entities.emoji.EmojiUnion;
 
 import java.util.List;
@@ -38,7 +39,13 @@ public class CustomStatus {
                 continue;
             }
             EmojiUnion emoji = activity.getEmoji();
-            return new CustomStatus(activity.getName(), emoji == null ? null : emoji.asUnicode().getFormatted());
+            String emojiString = null;
+            if (emoji instanceof CustomEmoji customEmoji) {
+                emojiString = customEmoji.getImageUrl();
+            } else if (emoji != null) {
+                emojiString = emoji.asUnicode().getFormatted();
+            }
+            return new CustomStatus(activity.getName(), emojiString);
         }
         return null;
     }
