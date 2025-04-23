@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { Snowflake } from "@/types/snowflake";
 import { defaultConfig, TetherConfig } from "@/types/config";
+import { Snowflake } from "@/types/snowflake";
 import { UserStatusPacket } from "@/types/socket";
 import { DiscordUser } from "@/types/user/discord-user";
+import { useEffect, useState } from "react";
 
 /**
  * Connect to the WebSocket and listen
@@ -11,6 +11,7 @@ import { DiscordUser } from "@/types/user/discord-user";
  *
  * @param snowflake the user's snowflake
  * @param config the optional Tether config
+ * @returns the Discord user, undefined if not found
  */
 export const useTetherWS = (
     snowflake: Snowflake,

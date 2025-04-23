@@ -1,37 +1,26 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
-    "target": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "useUnknownInCatchVariables": true,
-    "noImplicitOverride": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitReturns": true,
-    "noUncheckedIndexedAccess": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/lib/*": [
-        "./src/lib/*"
-      ],
-      "@/types/*": [
-        "./src/types/*"
-      ]
-    }
-  },
-  "include": [
-    "src"
-  ]
+    "compilerOptions": {
+        "module": "esnext",
+        "lib": ["dom", "esnext"],
+        "target": "ESNext",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "useUnknownInCatchVariables": true,
+        "noImplicitOverride": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "exactOptionalPropertyTypes": true,
+        "noImplicitReturns": true,
+        "noUncheckedIndexedAccess": true,
+        "paths": {
+            "@/*": ["./src/*"],
+            "@/lib/*": ["./src/lib/*"],
+            "@/types/*": ["./src/types/*"]
+        }
+    },
+    "include": ["src"]
 }
