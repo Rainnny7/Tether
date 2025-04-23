@@ -17,7 +17,7 @@ export const useTetherWS = (
     config?: TetherConfig | undefined
 ): DiscordUser | undefined => {
     const { endpoint, secure, debug } = { ...defaultConfig, ...config };
-    const url: string = `ws${secure && "s"}://${endpoint}/gateway`;
+    const url: string = `ws${secure ? "s" : ""}://${endpoint}/gateway`;
     const [user, setUser] = useState<DiscordUser | undefined>();
 
     useEffect(() => {
