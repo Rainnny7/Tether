@@ -27,15 +27,15 @@
         "dist"
     ],
     "devDependencies": {
-        "@types/bun": "latest",
-        "@types/react": "^19.0.0",
-        "react": "^19.0.0"
+        "@types/bun": "^1.2.10",
+        "@types/react": "^19.1.2",
+        "react": "^19.1.0"
     },
     "peerDependencies": {
         "react": "*",
-        "typescript": "^5.0.0"
+        "typescript": "^5.8.3"
     },
     "dependencies": {
-        "tsup": "^8.2.4"
+        "tsup": "^8.4.0"
     }
 }
