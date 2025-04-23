@@ -2,8 +2,7 @@ import { defaultConfig, TetherConfig } from "@/types/config";
 
 import { Snowflake } from "@/types/snowflake";
 import { DiscordUser } from "@/types/user/discord-user";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * Get the Discord user with the given snowflake.
@@ -16,7 +15,7 @@ export const useTether = (
     snowflake: Snowflake,
     config?: TetherConfig | undefined
 ): DiscordUser | undefined => {
-    const { endpoint, secure, debug } = { ...defaultConfig, ...config };
+    const { endpoint, secure } = { ...defaultConfig, ...config };
     const url: string = `https${
         secure ? "s" : ""
     }://${endpoint}/user/${snowflake}`;
