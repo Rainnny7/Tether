@@ -73,6 +73,7 @@ public class WebSocket extends TextWebSocketHandler {
                     } catch (BadRequestException | ServiceUnavailableException | ResourceNotFoundException ex) {
                         client.setListeningTo(null);
                         dispatch(client.getSession(), new ErrorMessagePacket(ex.getLocalizedMessage()));
+                        log.error("Failed to dispatch user status to session {}", client.getSession().getId(), ex);
                     }
                 }
             }
