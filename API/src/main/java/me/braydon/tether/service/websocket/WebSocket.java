@@ -145,10 +145,11 @@ public class WebSocket extends TextWebSocketHandler {
 
     private void dispatchUserStatus(@NonNull WebSocketClient client) {
         DiscordUser user = discordService.getUserBySnowflake(client.getListeningTo()).getUser();
+        System.out.println("user = " + user);
         if (!user.equals(client.getLastUser())) {
             client.setLastUser(user);
             dispatch(client.getSession(), new UserStatusPacket(user));
-            log.info("Session {} was notified of a user update for {}", client.getSession().getId(), client.getListeningTo());
+            log.info("Session {} was notified of a user update for {} ({})", client.getSession().getId(), user.getUsername(), user.getSnowflake());
         }
     }
 
