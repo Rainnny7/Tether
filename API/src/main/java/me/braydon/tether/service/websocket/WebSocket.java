@@ -148,6 +148,7 @@ public class WebSocket extends TextWebSocketHandler {
         if (!user.equals(client.getLastUser())) {
             client.setLastUser(user);
             dispatch(client.getSession(), new UserStatusPacket(user));
+            log.info("Session {} was notified of a user update for {}", client.getSession().getId(), client.getListeningTo());
         }
     }
 

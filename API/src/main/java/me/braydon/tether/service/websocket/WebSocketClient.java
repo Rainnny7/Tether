@@ -22,11 +22,13 @@ public class WebSocketClient {
      * The unix time this client connected.
      */
     private final long connected;
+
     /**
      * The snowflake of the user this client
      * is listening to for updates, if any.
      */
     private Long listeningTo;
+
     /**
      * The last user this client
      * has been sent a status for.
