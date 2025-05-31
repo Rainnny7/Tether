@@ -37,9 +37,12 @@ public class Clan {
      * @param clanJson the user details json
      * @return the constructed clan
      */
-    @NonNull
     public static Clan fromJson(@NonNull JSONObject clanJson) {
-        long snowflake = Long.parseLong(clanJson.getString("identity_guild_id"));
+        Object identityGuildId = clanJson.get("identity_guild_id");
+        if (identityGuildId == null) {
+            return null;
+        }
+        long snowflake = Long.parseLong(identityGuildId.toString());
         String tag = clanJson.getString("tag");
         ClanBadge clanBadge = ClanBadge.fromJson(snowflake, clanJson);
         boolean identityEnabled = clanJson.getBoolean("identity_enabled");
