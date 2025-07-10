@@ -55,7 +55,7 @@
             <dependency>
                 <groupId>com.konghq</groupId>
                 <artifactId>unirest-java-bom</artifactId>
-                <version>4.4.5</version>
+                <version>4.4.12</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
