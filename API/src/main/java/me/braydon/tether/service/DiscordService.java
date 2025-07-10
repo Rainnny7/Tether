@@ -12,6 +12,7 @@ import kong.unirest.core.json.JSONObject;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import me.braydon.tether.common.DiscordUtils;
 import me.braydon.tether.exception.impl.BadRequestException;
 import me.braydon.tether.exception.impl.ResourceNotFoundException;
 import me.braydon.tether.exception.impl.ServiceUnavailableException;
@@ -22,10 +23,7 @@ import me.braydon.tether.model.user.CachedDiscordUser;
 import me.braydon.tether.model.user.DiscordUser;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.SelfUser;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -92,20 +90,42 @@ public final class DiscordService extends ListenerAdapter {
     /**
      * Get a Discord user by their snowflake.
      *
-     * @param rawSnowflake the user snowflake
+     * @param query the user snowflake
      * @return the user response
      * @throws ServiceUnavailableException if the bot is not connected
      * @throws ResourceNotFoundException   if the user is not found
      */
     @NonNull
-    public DiscordUserResponse getUserBySnowflake(@NonNull String rawSnowflake) throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
-        long snowflake;
+    public DiscordUserResponse getUser(@NonNull String query) throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
+        long snowflake = -1L;
         try {
-            snowflake = Long.parseLong(rawSnowflake);
-        } catch (NumberFormatException ex) {
-            throw new BadRequestException("Not a valid snowflake.");
+            snowflake = Long.parseLong(query);
+        } catch (NumberFormatException ignore) {
+            // Safely ignore, we'll try to find the user by username
         }
-        return getUserBySnowflake(snowflake);
+        if (snowflake == -1L) {
+            // Check to ensure the username is valid before continuing the request
+            if (!DiscordUtils.isValidUsername(query)) {
+                throw new BadRequestException("The given username is not valid.");
+            }
+            // Try and get the user by username
+            User user;
+            if (query.contains("#")) { // Handle legacy usernames with discriminator
+                String[] parts = query.split("#");
+                if (parts.length != 2) {
+                    throw new BadRequestException("The given username is not valid.");
+                }
+                // Try to find the user by username and discriminator
+                user = jda.getUserByTag(parts[0], parts[1]);
+            } else {
+                user = jda.getUserByTag(query, "0000");
+            }
+            if (user == null) {
+                throw new ResourceNotFoundException("User not found.");
+            }
+            return getUser(user.getIdLong());
+        }
+        return getUser(snowflake);
     }
 
     /**
@@ -117,7 +137,7 @@ public final class DiscordService extends ListenerAdapter {
      * @throws ResourceNotFoundException   if the user is not found
      */
     @NonNull
-    public DiscordUserResponse getUserBySnowflake(long snowflake) throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
+    public DiscordUserResponse getUser(long snowflake) throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
         if (jda == null || (jda.getStatus() != JDA.Status.CONNECTED)) { // Ensure bot is connected
             throw new ServiceUnavailableException("Not connected to Discord.");
         }

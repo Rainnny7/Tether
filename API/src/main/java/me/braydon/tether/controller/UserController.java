@@ -31,12 +31,12 @@ public final class UserController {
      * A GET endpoint to get info about a
      * Discord user by their snowflake.
      *
-     * @param snowflake the user snowflake
+     * @param query the user snowflake or username
      * @return the retrieved user
      */
-    @GetMapping("/{snowflake}") @ResponseBody @NonNull
-    public ResponseEntity<DiscordUserResponse> getUserBySnowflake(@PathVariable @NonNull String snowflake)
+    @GetMapping("/{query}") @ResponseBody @NonNull
+    public ResponseEntity<DiscordUserResponse> getUserBySnowflake(@PathVariable @NonNull String query)
             throws BadRequestException, ServiceUnavailableException, ResourceNotFoundException {
-        return ResponseEntity.ok(discordService.getUserBySnowflake(snowflake));
+        return ResponseEntity.ok(discordService.getUser(query));
     }
 }

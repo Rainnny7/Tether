@@ -3,6 +3,8 @@ package me.braydon.tether.common;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Braydon
  */
@@ -10,6 +12,17 @@ import lombok.experimental.UtilityClass;
 public final class DiscordUtils {
     public static final long DISCORD_EPOCH = 1420070400000L;
     public static final long TIMESTAMP_OFFSET = 22;
+    private static final Pattern USERNAME_PATTERN = Pattern.compile("^[a-zA-Z0-9_]{2,32}$");
+
+    /**
+     * Checks if the given username is a valid Discord username.
+     *
+     * @param username the username to check
+     * @return whether the username is valid
+     */
+    public static boolean isValidUsername(@NonNull String username) {
+        return USERNAME_PATTERN.matcher(username).matches();
+    }
 
     /**
      * Gets the unix creation-time of a Discord-entity by

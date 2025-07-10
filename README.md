@@ -103,6 +103,5 @@ Soon...
 Below is a list of websites that are currently using Tether, take a look!
 
 - [rainnny.club](https://rainnny.club)
-- [oknick.club](https://oknick.club)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

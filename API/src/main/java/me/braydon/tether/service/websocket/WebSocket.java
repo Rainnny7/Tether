@@ -145,7 +145,7 @@ public class WebSocket extends TextWebSocketHandler {
     }
 
     private void dispatchUserStatus(@NonNull WebSocketClient client) {
-        DiscordUser user = discordService.getUserBySnowflake(client.getListeningTo()).getUser();
+        DiscordUser user = discordService.getUser(client.getListeningTo()).getUser();
         System.out.println("user = " + user);
         if (!user.equals(client.getLastUser())) {
             client.setLastUser(user);
