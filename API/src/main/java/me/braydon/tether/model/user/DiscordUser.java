@@ -7,6 +7,7 @@ import me.braydon.tether.model.user.avatar.Avatar;
 import me.braydon.tether.model.user.avatar.AvatarDecoration;
 import me.braydon.tether.model.user.badge.UserBadge;
 import me.braydon.tether.model.user.clan.Clan;
+import me.braydon.tether.model.user.collectibles.Collectibles;
 import me.braydon.tether.model.user.nitro.NitroSubscription;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -78,6 +79,11 @@ public final class DiscordUser {
      * The banner color (hex) of this user, if any.
      */
     private final String bannerColor;
+
+    /**
+     * The collectibles this user has, if any.
+     */
+    private final Collectibles collectibles;
 
     /**
      * The profile theme of this user, if any.
@@ -188,6 +194,8 @@ public final class DiscordUser {
         NitroSubscription nitroSubscription = userJson.isNull("premium_type")
                 || userJson.isNull("premium_since") ? null : NitroSubscription.fromJson(userJson);
 
+        JSONObject collectiblesJson = !detailsJson.isNull("collectibles") ? detailsJson.getJSONObject("collectibles") : null;
+
         JSONObject profileJson = userJson.has("user_profile") ? userJson.getJSONObject("user_profile") : null;
         String pronouns = null;
         if (profileJson != null) {
@@ -211,8 +219,9 @@ public final class DiscordUser {
                 snowflake, detailsJson.getString("username"), legacyUsername, detailsJson.optString("global_name", null),
                 discriminator, UserFlags.fromJson(detailsJson), Avatar.fromJson(snowflake, discriminator, legacyUsername != null, detailsJson),
                 avatarDecoration, Banner.fromJson(snowflake, detailsJson), detailsJson.optString("banner_color", null),
-                ProfileTheme.fromJson(profileJson), ProfileEffect.fromJson(profileJson), CustomStatus.fromActivities(activities), bio, pronouns, accentColor,
-                onlineStatus, member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients(), activities, SpotifyActivity.fromActivities(activities),
+                Collectibles.fromJson(collectiblesJson), ProfileTheme.fromJson(profileJson), ProfileEffect.fromJson(profileJson),
+                CustomStatus.fromActivities(activities), bio, pronouns, accentColor, onlineStatus,
+                member == null ? EnumSet.noneOf(ClientType.class) : member.getActiveClients(), activities, SpotifyActivity.fromActivities(activities),
                 UserBadge.fromJson(userJson), ConnectedAccount.fromJson(userJson), clan, nitroSubscription, detailsJson.optBoolean("bot", false),
                 DiscordUtils.getTimeCreated(snowflake)
         );
