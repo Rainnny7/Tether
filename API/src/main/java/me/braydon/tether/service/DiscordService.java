@@ -222,7 +222,7 @@ public final class DiscordService extends ListenerAdapter {
     @NonNull
     private JSONObject getUser(long snowflake, boolean includeProfile) throws BadRequestException {
         HttpResponse<JsonNode> response = Unirest.get("https://discord.com/api/v10/users/" + snowflake + (includeProfile ? "/profile?with_mutual_guilds=false" : ""))
-                .header(HttpHeaders.AUTHORIZATION, userAccountToken).asJson();
+                .header(HttpHeaders.AUTHORIZATION, includeProfile ? userAccountToken : jda.getToken()).asJson();
         JSONObject json = response.getBody().getObject();
         if (response.getStatus() == HttpStatus.OK) {
             return json;
