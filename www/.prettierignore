@@ -1,0 +1,25 @@
+# Build outputs
+.next
+**/.next
+**/.next/**
+dist
+**/dist
+**/dist/**
+build
+**/build
+**/build/**
+
+# Dependencies
+node_modules
+**/node_modules
+**/node_modules/**
+
+# Cache
+.turbo
+**/.turbo
+**/.turbo/**
+
+# Misc
+.git
+**/.git
+**/.git/**
