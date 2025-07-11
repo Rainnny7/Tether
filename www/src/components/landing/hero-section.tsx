@@ -59,19 +59,36 @@ const Greeting = (): ReactElement => (
         >
             {/* Wumpus ;p */}
             <motion.div
-                className="absolute -top-16.5 right-35 z-10"
+                className="absolute -top-27 right-35 z-10"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.7, duration: 0.5, ease: "easeOut" }}
             >
-                <Image
-                    src="/media/sitting-wumpus.webp"
-                    alt="Sitting Wumpus"
-                    width={128}
-                    height={128}
-                    unoptimized
-                    draggable={false}
-                />
+                <motion.div
+                    animate={{ y: [-5, 5, -5] }}
+                    transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    }}
+                >
+                    <Image
+                        src="/media/wumpus/leaf.webp"
+                        alt="Wumpus' Leaf"
+                        width={128}
+                        height={128}
+                        unoptimized
+                        draggable={false}
+                    />
+                    <Image
+                        src="/media/wumpus/sitting.webp"
+                        alt="Wumpus Sitting"
+                        width={128}
+                        height={128}
+                        unoptimized
+                        draggable={false}
+                    />
+                </motion.div>
             </motion.div>
             <SplitText
                 className="max-w-screen-md text-6xl font-bold"
