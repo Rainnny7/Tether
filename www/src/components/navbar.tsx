@@ -50,7 +50,7 @@ const links: NavbarLink[] = [
 ];
 
 const Navbar = (): ReactElement => (
-    <div className="fixed inset-x-0 top-4.5 mx-auto px-5 py-2 max-w-[var(--max-page-width)] flex justify-between gap-2 items- z-50">
+    <div className="fixed inset-x-0 top-4.5 mx-auto px-5 py-2 max-w-[var(--max-page-width)] flex justify-between gap-2 items-center z-50">
         {/* Left Home Button */}
         <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -81,7 +81,7 @@ const HomeButton = (): ReactElement => {
 
     return (
         <Link
-            className="flex items-center gap-3 hover:opacity-75 transition-opacity duration-300 transform-gpu"
+            className="flex items-center gap-3 cursor-default hover:opacity-75 transition-opacity duration-300 transform-gpu"
             href="/"
             draggable={false}
             onMouseEnter={() => setIsHovered(true)}
