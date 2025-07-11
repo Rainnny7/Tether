@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { ReactElement, ReactNode } from "react"
-import { HiHome } from "react-icons/hi2"
+import Link from "next/link";
+import { ReactElement, ReactNode } from "react";
+import { HiHome } from "react-icons/hi2";
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -10,15 +10,15 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-} from "~/components/ui/navigation-menu"
-import Branding from "./branding"
+} from "~/components/ui/navigation-menu";
+import Branding from "./branding";
 
 type NavbarLink = {
-    label: string
-    icon: ReactNode
-    href?: string
-    content?: ReactNode
-}
+    label: string;
+    icon: ReactNode;
+    href?: string;
+    content?: ReactNode;
+};
 
 const links: NavbarLink[] = [
     {
@@ -31,7 +31,7 @@ const links: NavbarLink[] = [
         icon: <HiHome />,
         content: <div>hello</div>,
     },
-]
+];
 
 const Navbar = (): ReactElement => (
     <div className="fixed inset-x-0 top-4 mx-auto p-2 w-fit flex justify-between gap-2 items-center">
@@ -54,9 +54,13 @@ const Navbar = (): ReactElement => (
                         </NavigationMenuItem>
                     ) : (
                         <NavigationMenuItem key={link.label}>
-                            <NavigationMenuTrigger>{link.label}</NavigationMenuTrigger>
+                            <NavigationMenuTrigger>
+                                {link.label}
+                            </NavigationMenuTrigger>
                             <NavigationMenuContent>
-                                <NavigationMenuLink>{link.label}</NavigationMenuLink>
+                                <NavigationMenuLink>
+                                    {link.label}
+                                </NavigationMenuLink>
                             </NavigationMenuContent>
                         </NavigationMenuItem>
                     )
@@ -64,5 +68,5 @@ const Navbar = (): ReactElement => (
             </NavigationMenuList>
         </NavigationMenu>
     </div>
-)
-export default Navbar
+);
+export default Navbar;
