@@ -78,14 +78,14 @@ const Greeting = (): ReactElement => (
                 text="Nostrud voluptate ea anim aliqua exercitation velit exercitation velit."
                 splitType="words"
                 delay={112}
-                duration={1.7}
+                duration={1}
             />
         </motion.div>
 
         {/* Bottom Text */}
         <SlideUpAnimation
             className="max-w-lg text-xl text-muted-foreground font-medium text-center"
-            delay={1.45}
+            delay={1.15}
         >
             Officia in qui reprehenderit ipsum. Dolore sint id mollit occaecat
             est et laborum ullamco ad aute.
