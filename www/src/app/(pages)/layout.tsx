@@ -1,13 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { TooltipProvider } from "~/components/ui/tooltip";
+import { ggSans } from "~/lib/font";
 import Navbar from "../../components/navbar";
 import { env } from "../../lib/env";
 import "../styles/globals.css";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
 
 /**
  * The metadata for this app.
@@ -42,9 +38,13 @@ const RootLayout = ({
     children: React.ReactNode;
 }>) => (
     <html lang="en">
-        <body className={`${geistSans.variable} antialiased`}>
+        <body className={`${ggSans.className} antialiased`}>
             <Navbar />
-            {children}
+            <div className="px-5 mx-auto mt-[var(--navbar-offset)] max-w-[var(--max-page-width)] min-h-[calc(100vh-var(--navbar-offset))]">
+                <TooltipProvider delayDuration={250}>
+                    {children}
+                </TooltipProvider>
+            </div>
         </body>
     </html>
 );
