@@ -38,13 +38,13 @@ const RootLayout = ({
     children: React.ReactNode;
 }>) => (
     <html lang="en">
-        <body className={`${ggSans.className} antialiased`}>
-            <Navbar />
-            <div className="px-5 mx-auto mt-[var(--navbar-offset)] max-w-[var(--max-page-width)] min-h-[calc(100vh-var(--navbar-offset))]">
-                <TooltipProvider delayDuration={250}>
+        <body className={`${ggSans.className} antialiased select-none`}>
+            <TooltipProvider delayDuration={250}>
+                <Navbar />
+                <div className="px-5 mx-auto max-w-[var(--max-page-width)]">
                     {children}
-                </TooltipProvider>
-            </div>
+                </div>
+            </TooltipProvider>
         </body>
     </html>
 );

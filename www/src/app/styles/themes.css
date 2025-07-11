@@ -1,6 +1,6 @@
 :root {
     --radius: 0.625rem;
-    --background: oklch(0.1297 0.005 285.67);
+    --background: oklch(0.1553 0.0042 285.9);
     --foreground: oklch(0.9328 0.0025 228.7857);
     --card: oklch(0.2097 0.008 274.5332);
     --card-foreground: oklch(0.8853 0 0);
@@ -9,10 +9,10 @@
     --primary: oklch(0.5774 0.2091 273.85);
     --primary-foreground: oklch(1 0 0);
     --secondary: oklch(0.2316 0.0038 286.1);
-    --secondary-foreground: oklch(0.1884 0.0128 248.5103);
+    --secondary-foreground: oklch(0.9328 0.0025 228.7857);
     --muted: oklch(0.209 0 0);
     --muted-foreground: oklch(0.5637 0.0078 247.9662);
-    --accent: oklch(0.1928 0.0331 242.5459);
+    --accent: oklch(0.497 0.1632 274.7);
     --accent-foreground: oklch(0.5774 0.2091 273.85);
     --destructive: oklch(0.6188 0.2376 25.7658);
     --destructive-foreground: oklch(1 0 0);
@@ -92,5 +92,4 @@
 
     /* Misc */
     --max-page-width: 114rem;
-    --navbar-offset: 5rem;
 }
