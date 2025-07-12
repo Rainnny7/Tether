@@ -10,9 +10,7 @@ import {
     HiOutlineMagnifyingGlass,
     HiOutlineStar,
 } from "react-icons/hi2";
-import Branding from "~/components/branding";
 import SimpleTooltip from "~/components/simple-tooltip";
-import { Button } from "~/components/ui/button";
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -50,28 +48,23 @@ const links: NavbarLink[] = [
 ];
 
 const Navbar = (): ReactElement => (
-    <div className="fixed inset-x-0 top-4.5 mx-auto px-5 py-2 max-w-[var(--max-page-width)] flex justify-between gap-2 items-center z-50">
+    <div className="fixed inset-x-0 top-3.5 mx-auto px-5 py-2 max-w-[var(--max-page-width)] flex justify-between gap-2 items-center z-50">
         {/* Left Home Button */}
         <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
         >
             <HomeButton />
         </motion.div>
 
-        {/* Center Links */}
-        <CenterLinks />
-
-        {/* Right - Other Links */}
+        {/* Right Links */}
         <motion.div
-            className="flex gap-2 items-center"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.55, duration: 0.5, ease: "easeOut" }}
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: "easeOut" }}
         >
-            {/* GitHub */}
-            <GitHubButton />
+            <Links />
         </motion.div>
     </div>
 );
@@ -87,9 +80,6 @@ const HomeButton = (): ReactElement => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Logo */}
-            <Branding width={36} height={20} />
-
             <div className="pr-10 relative flex flex-col">
                 {/* Logo Text */}
                 <motion.div
@@ -118,15 +108,14 @@ const HomeButton = (): ReactElement => {
     );
 };
 
-const CenterLinks = (): ReactElement => {
+const Links = (): ReactElement => {
     const path: string = usePathname();
     return (
         <motion.div
-            className="absolute left-1/2 -translate-x-1/2 overflow-hidden"
+            className="overflow-hidden"
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "auto", opacity: 1 }}
             transition={{
-                delay: 0.25,
                 duration: 0.525,
                 ease: [0.25, 0.46, 0.45, 0.94],
             }}
@@ -177,30 +166,5 @@ const CenterLinks = (): ReactElement => {
         </motion.div>
     );
 };
-
-const GitHubButton = (): ReactElement => (
-    <SimpleTooltip content="Click to view the source code!" side="bottom">
-        <Link
-            href="https://github.com/Rainnny7/Tether"
-            target="_blank"
-            draggable={false}
-        >
-            <Button
-                className="bg-secondary/55 backdrop-blur-md border border-border rounded-md hover:opacity-75 transition-opacity duration-300 transform-gpu"
-                variant="secondary"
-                size="icon"
-            >
-                <Image
-                    src="/media/github-logo.png"
-                    alt="GitHub Logo"
-                    width={17}
-                    height={17}
-                    unoptimized
-                    draggable={false}
-                />
-            </Button>
-        </Link>
-    </SimpleTooltip>
-);
 
 export default Navbar;
