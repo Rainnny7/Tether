@@ -26,7 +26,7 @@
       <br />
       <a href="https://api.usetether.rest/user/504147739131641857">View Demo</a>
       ·
-      <a href="https://git.rainnny.club/Rainnny/Tether/issues">Report Bug</a>
+      <a href="https://github.com/Rainnny7/Tether/issues">Report Bug</a>
   </p>
 </div>
 
@@ -61,15 +61,11 @@ creativity. Your contributions are highly valued.
 If you have an idea to improve this project, feel free to fork the repository and submit a pull request. Alternatively,
 you can open an issue with the "enhancement" tag. Don't forget to star the project! Thank you for your support!
 
-> [!IMPORTANT]  
-> Pull Requests on **GitHub** will **NOT** be reviewed. Please make a Pull Request
-> on [Gitea](https://git.rainnny.club/Rainnny/Tether/pulls).
-
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/CoolFeature`)
 3. Commit your Changes (`git commit -m "Add some CoolFeature"`)
 4. Push to the Branch (`git push origin feature/CoolFeature`)
-5. Open a [Pull Request](https://git.rainnny.club/Rainnny/Tether/pulls)
+5. Open a [Pull Request](https://github.com/Rainnny7/Tether/pulls)
 
 ### Top contributors:
 
@@ -83,7 +79,7 @@ you can open an issue with the "enhancement" tag. Don't forget to star the proje
 
 ## License
 
-Distributed under the MIT License. See <a href="https://git.rainnny.club/Rainnny/Tether/src/branch/master/LICENSE.md">
+Distributed under the MIT License. See <a href="https://github.com/Rainnny7/Tether/src/branch/master/LICENSE.md">
 LICENSE.md</a> for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
