@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactElement, ReactNode } from "react";
 import { HiOutlineCodeBracket } from "react-icons/hi2";
-import Greeting from "./greeting";
 
 type QuickLink = {
     label: string;
@@ -35,20 +34,16 @@ const quickLinks: QuickLink[] = [
     },
 ];
 
-const HeroSection = (): ReactElement => (
-    <div className="relative min-h-screen pb-5 flex flex-col justify-end">
-        <Greeting />
-
-        <motion.div
-            className="mt-auto pt-16 flex justify-between gap-3 items-center"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.7, duration: 0.5, ease: "easeOut" }}
-        >
-            <QuickLinks />
-            <Copyright />
-        </motion.div>
-    </div>
+const Footer = (): ReactElement => (
+    <motion.div
+        className="fixed inset-x-5 bottom-5 mx-auto max-w-[var(--max-page-width)] flex justify-between gap-3 items-center"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 1.7, duration: 0.5, ease: "easeOut" }}
+    >
+        <QuickLinks />
+        <Copyright />
+    </motion.div>
 );
 
 const QuickLinks = (): ReactElement => (
@@ -87,15 +82,18 @@ const QuickLinks = (): ReactElement => (
 );
 
 const Copyright = (): ReactElement => (
-    <div className="w-32 mt-auto flex flex-col items-end text-right text-xs font-semibold text-muted-foreground uppercase">
+    <div className="mt-auto flex flex-col items-end text-right text-xs font-semibold text-muted-foreground uppercase">
         <span>&copy; Copyright</span>
         <span className="flex gap-1 items-center">
             <Link
-                className="flex gap-1 items-center cursor-default hover:text-white/60 transition-colors duration-300 transform-gpu"
+                className="group flex gap-1 items-center cursor-default hover:text-white/60 transition-colors duration-300 transform-gpu"
                 href="https://github.com/Rainnny7"
                 target="_blank"
                 draggable={false}
             >
+                <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform-gpu">
+                    Made with 💙 by
+                </span>
                 <Image
                     className="rounded-full"
                     src="https://avatars.githubusercontent.com/u/32585528"
@@ -112,4 +110,4 @@ const Copyright = (): ReactElement => (
     </div>
 );
 
-export default HeroSection;
+export default Footer;

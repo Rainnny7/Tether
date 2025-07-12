@@ -1,34 +1,15 @@
+"use client";
+
 import { motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactElement } from "react";
-import SlideUpAnimation from "~/components/animation/slide-up-animation";
-import Branding from "~/components/branding";
-import { Button } from "~/components/ui/button";
-import SplitText from "~/components/ui/split-text";
+import SlideUpAnimation from "../animation/slide-up-animation";
+import { Button } from "../ui/button";
+import SplitText from "../ui/split-text";
 
-const Greeting = (): ReactElement => (
-    <div className="mt-[17vh] flex flex-col gap-2 justify-center items-center">
-        {/* Logo */}
-        <motion.div
-            className="relative mb-32 flex gap-7 items-center"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5, ease: "easeOut" }}
-        >
-            <div className="absolute -inset-x-20 -inset-y-52 size-[28rem] bg-radial-[at_center] from-white/5 via-transparent to-transparent blur-sm rounded-full -z-10" />
-
-            <Branding width={86} height={50} />
-            <Image
-                src="/media/logo-text.png"
-                alt="Tether Logo"
-                width={164}
-                height={24}
-                unoptimized
-                draggable={false}
-            />
-        </motion.div>
-
+const HeroSection = (): ReactElement => (
+    <div className="relative min-h-screen pb-5 flex flex-col justify-center items-center">
         {/* Top Text */}
         <motion.div
             className="relative"
@@ -38,7 +19,7 @@ const Greeting = (): ReactElement => (
         >
             {/* Wumpus ;p */}
             <motion.div
-                className="absolute -top-27.5 right-35 z-10"
+                className="absolute -top-27.5 right-20 z-10"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.7, duration: 0.5, ease: "easeOut" }}
@@ -49,7 +30,7 @@ const Greeting = (): ReactElement => (
             {/* Text */}
             <SplitText
                 className="max-w-screen-md text-6xl font-bold"
-                text="Nostrud voluptate ea anim aliqua exercitation velit exercitation velit."
+                text="An API designed to provide real-time access to data on Discord."
                 splitType="words"
                 delay={112}
                 duration={1}
@@ -134,4 +115,4 @@ const JoinDiscordButton = (): ReactElement => (
     </motion.div>
 );
 
-export default Greeting;
+export default HeroSection;

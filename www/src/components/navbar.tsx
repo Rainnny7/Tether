@@ -18,6 +18,7 @@ import {
     NavigationMenuList,
 } from "~/components/ui/navigation-menu";
 import { cn } from "~/lib/utils";
+import Branding from "./branding";
 
 type NavbarLink = {
     label: string;
@@ -80,6 +81,8 @@ const HomeButton = (): ReactElement => {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            <Branding width={32} height={32} />
+
             <div className="pr-10 relative flex flex-col">
                 {/* Logo Text */}
                 <motion.div

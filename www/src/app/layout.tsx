@@ -1,16 +1,18 @@
 import type { Metadata, Viewport } from "next";
+import Background from "~/components/background";
+import Footer from "~/components/footer";
+import Navbar from "~/components/navbar";
 import { TooltipProvider } from "~/components/ui/tooltip";
+import { env } from "~/lib/env";
 import { ggSans } from "~/lib/font";
-import Navbar from "../../components/navbar";
-import { env } from "../../lib/env";
-import "../styles/globals.css";
+import "./styles/globals.css";
 
 /**
  * The metadata for this app.
  */
 export const metadata: Metadata = {
     title: {
-        default: "Tether",
+        default: "Tether - Discord User & Guild Lookup",
         template: "%s • Tether",
     },
     description:
@@ -38,12 +40,18 @@ const RootLayout = ({
     children: React.ReactNode;
 }>) => (
     <html lang="en">
-        <body className={`${ggSans.className} antialiased select-none`}>
+        <body
+            className={`relative ${ggSans.className} antialiased select-none`}
+        >
             <TooltipProvider delayDuration={250}>
+                {/* Background */}
+                <Background />
+
                 <Navbar />
-                <div className="px-5 mx-auto max-w-[var(--max-page-width)]">
+                <div className="relative px-5 mx-auto max-w-[var(--max-page-width)]">
                     {children}
                 </div>
+                <Footer />
             </TooltipProvider>
         </body>
     </html>
