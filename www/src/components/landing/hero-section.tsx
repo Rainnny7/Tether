@@ -172,7 +172,7 @@ const QuickLinks = (): ReactElement => (
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.55, duration: 0.5, ease: "easeOut" }}
     >
-        {quickLinks.map((link) => (
+        {quickLinks.map((link: QuickLink) => (
             <Link
                 key={link.label}
                 className="group flex gap-1 items-center hover:translate-x-1 cursor-default hover:text-white/60 transition-all duration-300 transform-gpu"
