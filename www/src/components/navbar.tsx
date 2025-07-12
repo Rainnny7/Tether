@@ -146,7 +146,7 @@ const CenterLinks = (): ReactElement => {
                                             className={cn(
                                                 "group/link flex-row gap-2 items-center font-semibold",
                                                 isActive &&
-                                                    "bg-muted-foreground/15 hover:!bg-muted-foreground/25"
+                                                    "bg-muted-foreground/15 hover:!bg-muted-foreground/25 focus:!bg-muted-foreground/25"
                                             )}
                                             href={link.href}
                                             draggable={false}
@@ -156,7 +156,7 @@ const CenterLinks = (): ReactElement => {
                                                     "*:stroke-muted-foreground *:transition-colors *:duration-300 *:transform-gpu",
                                                     isActive
                                                         ? "*:stroke-primary"
-                                                        : "*:group-hover/link:stroke-white"
+                                                        : "*:group-hover/link:stroke-white *:group-focus/link:stroke-white"
                                                 )}
                                             >
                                                 {isActive ? (
